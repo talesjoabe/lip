@@ -1,0 +1,72 @@
+#include <iostream>
+#include <fstream> // acesso a biblioteca com as funções que permitem o uso dos arquivos
+#include <locale.h> // permitir a acentuação
+#include <cstring>
+
+using namespace std;
+
+#define LINHASMAX 512
+#define COLUNASMAX 512
+#define CANAIS 3
+
+struct Img{
+    int linhas;
+    int colunas;
+    int M[CANAIS][COLUNASMAX][LINHASMAX];
+};
+
+void abre_img(char nome[], Img& img){
+    fstream arq;
+
+    int linhas, colunas, tam, pixels, k=0;
+    char tipo[2]; // declara uma variavel char para armazenar o tipo da imagem
+
+    arq.open(nome);
+
+    if(arq.is_open()){
+        cout << "Está aberto!\n";
+        arq.getline(tipo, 3);
+        cout << tipo;
+
+        arq >> colunas;
+        arq.ignore();
+        arq >> linhas;
+        arq.ignore();
+        arq>> pixels;
+        arq.ignore();
+
+        cout << colunas << " " << linhas << " " << pixels << endl << endl;
+
+        for(int i=0; i<linhas; i++){
+            for(int j=0; j<colunas; j++){
+                arq >> img.M[k][j][i];
+                cout << img.M[k][j][i] << " ";
+                cout << endl;
+                k++;
+
+                if(k==3){
+                    k=0;
+                }
+            }
+        }
+    }
+
+    else{
+        cout << "Não está aberto!\n";
+    }
+}
+
+int main()
+{
+    setlocale(LC_ALL, "Portuguese"); // permite a utilização de acentos provenientes da lingua portuguesa
+
+    Img img;
+    char nome[10];
+
+    cout << "Informe o nome do arquivo que vc deseja abrir: " << endl;
+    cin >> nome;
+
+    abre_img(nome, img);
+
+    return 0;
+}
