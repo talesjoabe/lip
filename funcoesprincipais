@@ -2,6 +2,7 @@
 #include <fstream> // acesso a biblioteca com as funções que permitem o uso dos arquivos
 #include <locale.h> // permitir a acentuação
 #include <cstring>
+#include <cstdlib>
 
 using namespace std;
 
@@ -13,44 +14,60 @@ struct Img{
 
 void abre_img(char nome[], Img& img){
     fstream arq;
-    ofstream myfile;
-    myfile.open("aaa.ppm");
 
-    int linhas, colunas, tam, pixels, k=0;
-    char tipo[2]; // declara uma variavel char para armazenar o tipo da imagem
+    int  pixels, k=0;
+    char tipo[3]; // declara uma variavel char para armazenar o tipo da imagem
 
     arq.open(nome);
 
     if(arq.is_open()){
-        cout << "Está aberto!\n";
+        //cout << "Está aberto!\n";
         arq.getline(tipo, 3);
-        myfile << tipo << "\n";
-
-        arq >> colunas;
-        arq.ignore();
-        arq >> linhas;
-        arq.ignore();
+        if(strcmp("P3",tipo)!=0){
+            cout<<"ERRO\n";
+            exit(0);
+        }
+        arq >> img.colunas;
+        arq >> img.linhas;
         arq>> pixels;
-        arq.ignore();
 
-        myfile << colunas << " " << linhas << "\n" << pixels << endl;
-        int i;
-        int j;
-        int c = 0;
+        int i, j;
 
-        for(i=0; i<linhas; i++){
-            for(j=0; j<colunas; j++){
+        for(i=0; i<img.linhas; i++){
+            for(j=0; j<img.colunas; j++){
                for(k=0; k<3; k++){
-                    c++;
                     arq >> img.M[i][j][k];
-                    myfile << img.M[i][j][k] << " ";
-                    k++;
                }
             }
-            //myfile << endl;
         }
-        cout<<"Caminho total: "<<i<<"  "<<j<< " " << c << endl;
         arq.close();
+    }
+
+    else{
+        cout << "Não está aberto!\n";
+    }
+}
+void salva_img(char nome[],Img img){
+    ofstream myfile;
+
+    myfile.open(nome);
+
+    if(myfile.is_open()){
+        myfile << "P3"<<endl;
+
+        myfile << img.colunas << " " << img.linhas << "\n" << 255 << endl;
+
+        int i, j,k;
+
+        for(i=0; i<img.linhas; i++){
+            for(j=0; j<img.colunas; j++){
+               for(k=0; k<3; k++){
+                    myfile << img.M[i][j][k] << " ";
+               }
+            }
+
+            myfile << endl;
+        }
         myfile.close();
     }
 
@@ -64,10 +81,12 @@ int main()
     setlocale(LC_ALL, "Portuguese"); // permite a utilização de acentos provenientes da lingua portuguesa
     Img img;
 
-    char nome[]="ect_logo.ppm";
+    char nome[]="lake.ppm";
+
     //cout << "Informe o nome do arquivo que vc deseja abrir: " << endl;
 
     abre_img(nome, img);
+    salva_img("Saida.ppm",img);
 
     return 0;
 }
