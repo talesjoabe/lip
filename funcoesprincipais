@@ -45,6 +45,7 @@ void abre_img(char nome[], Img& img){
 
     else{
         cout << "Não está aberto!\n";
+        exit(0);
     }
 }
 void salva_img(char nome[],Img img){
@@ -70,23 +71,39 @@ void salva_img(char nome[],Img img){
         }
         myfile.close();
     }
+}
 
-    else{
-        cout << "Não está aberto!\n";
+void corta_rgb(Img img_in, Img& img_out, int li, int ci, int lf, int cf){
+
+    char nome[]= "lake.ppm";
+
+    int i, j, k;
+
+    for(i=li; i<=lf; i++){
+        for(j=ci; j<=cf; j++){
+            for(k=0; k<3; k++){
+                img_out.M[i][j][k] = img_in.M[i][j][k];
+            }
+        }
     }
+
+    img_out.linhas= lf-li;
+    img_out.colunas= cf-ci;
+
+    salva_img("Nova_imagem.ppm", img_out);
 }
 
 int main()
 {
     setlocale(LC_ALL, "Portuguese"); // permite a utilização de acentos provenientes da lingua portuguesa
-    Img img;
+    Img img, img_out;
 
     char nome[]="lake.ppm";
 
     //cout << "Informe o nome do arquivo que vc deseja abrir: " << endl;
 
     abre_img(nome, img);
-    salva_img("Saida.ppm",img);
+    corta_rgb(img, img_out, 0, 0, 70, 70);
 
     return 0;
 }
