@@ -8,7 +8,7 @@ using namespace std;
 struct Img{
     int linhas;
     int colunas;
-    int M[88][220][3];
+    int M[511][511][3];
 };
 
 void abre_img(char nome[], Img& img){
@@ -37,27 +37,26 @@ void abre_img(char nome[], Img& img){
         int i;
         int j;
         int c = 0;
+
         for(i=0; i<linhas; i++){
             for(j=0; j<colunas; j++){
-                c++;
-                cout<<c<<" ";
-                arq >> img.M[i][j][k];
-                myfile << img.M[i][j][k] << " ";
-                k++;
-
-                if(k==3){
-                    k=0;
-                }
+               for(k=0; k<3; k++){
+                    c++;
+                    arq >> img.M[i][j][k];
+                    myfile << img.M[i][j][k] << " ";
+                    k++;
+               }
             }
             //myfile << endl;
         }
-        cout<<"Caminho total: "<<i<<"  "<<j<<endl;
+        cout<<"Caminho total: "<<i<<"  "<<j<< " " << c << endl;
+        arq.close();
+        myfile.close();
     }
 
     else{
         cout << "Não está aberto!\n";
     }
-    myfile.close();
 }
 
 int main()
