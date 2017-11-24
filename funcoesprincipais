@@ -117,8 +117,8 @@ void salva_img(char nome[],Img img){
 }
 /*/
 
-/*/
-void rotaciona(Img img_in, Img& img_out){
+
+/*/void rotaciona(Img img_in, Img& img_out){
     int i, j, k;
 
     img_out.linhas= img_in.colunas;
@@ -133,8 +133,8 @@ void rotaciona(Img img_in, Img& img_out){
     }
 
     salva_img("Nova_imagem_rotacionada.ppm", img_out);
-}
-/*/
+}/*/
+
 
 /*/void diminui_tamanho(Img img_in, Img& img_out){
     int i=0, j=0, k, linhas=0, colunas=0;
@@ -142,11 +142,11 @@ void rotaciona(Img img_in, Img& img_out){
     img_out.linhas= img_in.linhas/2;
     img_out.colunas= img_in.colunas/2;
 
-    for(i=0; linhas<=img_out.linhas; linhas++){
+    for(linhas=0; linhas<img_out.linhas; linhas++){
         if(i%2!=0){
             i++;
         }
-        for(colunas=0; colunas<=img_in.colunas; colunas++){
+        for(colunas=0; colunas<img_in.colunas; colunas++){
             if(j%2!=0){
                 j++;
             }
@@ -197,12 +197,52 @@ void binariza(Img img_in, Img& img_out, int limiar){
 }
 /*/
 
+/*/void aumenta_tamanho(Img img_in, Img& img_out){
+    int i, j, k, linhas=0, colunas=0, media=0;
+
+    img_out.linhas = 2*img_in.linhas-1;
+    img_out.colunas = 2*img_in.colunas-1;
+
+    for(i=0; i<=img_out.linhas;i++){
+        for(j=0; j<=img_out.colunas;j++){
+            for(k=0;k<3;k++){
+                if(i==0 || i==img_out.linhas-1 || j==0 || j==img_out.colunas-1){
+                    if(i%2!=0){
+                        media= (img_in.M[linhas-1][colunas][k]+img_in.M[linhas+1][colunas][k]);
+                        if(k==2){
+                            img_out.M[i][j][k]= media/6;
+                            linhas++;
+                        }
+                    }
+
+                    else if(j%2!=0){
+                        media= (img_in.M[linhas][colunas-1][k]+img_in.M[linhas][colunas+1][k])/2;
+                        if(k==2){
+                            img_out.M[i][j][k]= media/6;
+                            colunas++;
+                        }
+                    }
+                }
+
+                else if(i==2*linhas && j==2*colunas){
+                    img_out.M[i][j][k] = img_in.M[linhas][colunas][k];
+                }
+            }
+            media=0;
+        }
+        colunas=0;
+    }
+
+    salva_img("Imagem_aumentada.ppm", img_out);
+
+}/*/
+
 int main()
 {
     setlocale(LC_ALL, "Portuguese"); // permite a utilização de acentos provenientes da lingua portuguesa
     Img img, img_out;
 
-    char nome[]="lena.ppm";
+    char nome[]="oi.ppm";
 
     //cout << "Informe o nome do arquivo que vc deseja abrir: " << endl;
 
