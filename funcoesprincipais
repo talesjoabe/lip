@@ -134,6 +134,24 @@ void rotaciona(Img img_in, Img& img_out){
 
     salva_img("Nova_imagem_rotacionada.ppm", img_out);
 }
+
+void rotaciona_antihorario(Img img_in, Img& img_out){
+    int i, j, k;
+
+    img_out.linhas= img_in.colunas;
+    img_out.colunas = img_in.linhas;
+
+    for(i=0; i<=img_in.linhas; i++){
+        for(j=0; j<=img_in.colunas; j++){
+            for(k=0; k<3; k++){
+                img_out.M[img_out.linhas-1-j][img_out.linhas-1-i][k] = img_in.M[i][j][k];
+            }
+        }
+    }
+
+    salva_img("Nova_imagem_rotacionada_antihorario.ppm", img_out);
+}
+
 /*/
 
 /*/void diminui_tamanho(Img img_in, Img& img_out){
