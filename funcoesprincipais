@@ -311,7 +311,6 @@ void cinza(Img img_in, Img& img_out){
                 img_out.M[i][j][2] = media;
         }
     }
-
     salva_img("cinza.ppm", img_out);
 }
 /*/
