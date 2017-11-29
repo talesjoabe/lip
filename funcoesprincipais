@@ -357,6 +357,37 @@ void binariza_canal (Img img_in, Img& img_out, int limiar){
     salva_img("binarizar_canal.ppm", img_out);
 }
 
+void equaliza_histograma(Img img_in, Img& img_out){
+    img_out.linhas=img_in.linhas;
+    img_out.colunas=img_in.colunas;
+
+    int h[3][256]={};
+    int pixel,s;
+    for(int i=0;i<img_in.linhas;i++){
+        for(int j=0;j<img_in.colunas;j++){
+            for(int k=0;k<3;k++){
+                pixel=img_in.M[i][j][k];
+                h[k][pixel]++;
+            }
+        }
+    }
+    for(int i=0;i<img_in.linhas;i++){
+        for(int j=0;j<img_in.colunas;j++){
+            for(int k=0;k<3;k++){
+                s=0;
+                for(int l=0;l<=img_in.M[i][j][k];l++){
+                    s=s+h[k][l];
+                }
+                s=s*(255/(img_in.linhas*img_in.colunas));
+                img_out.M[i][j][k]=s;
+            }
+        }
+    }
+
+
+
+}
+
 void solariza (Img img_in, Img& img_out, int limiar){
     int i, j;
 
