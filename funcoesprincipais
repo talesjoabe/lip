@@ -313,6 +313,17 @@ void cinza(Img img_in, Img& img_out){
     }
     salva_img("cinza.ppm", img_out);
 }
+
+void negativo (Img img_in, Img img_out){
+    for (int i=0; i<img_in.linhas; i++){
+        for (int j=0; j<img_in.colunas; j++){
+            img_out.M[i][j][0] = 255-img_in.M[i][j][0];
+            img_out.M[i][j][1] = 255-img_in.M[i][j][1];
+            img_out.M[i][j][2] = 255-img_in.M[i][j][2];
+        }
+    }
+    salva_img("negativo.ppm", img_out);
+}
 /*/
 
 int main()
