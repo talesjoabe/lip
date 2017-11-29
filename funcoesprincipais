@@ -209,7 +209,35 @@ void aumenta_tamanho(Img img_in, Img& img_out){
     }
     salva_img("imagem_aumentada.ppm", img_out);
 }
+/*/
 
+/*/
+Img mascara (Img img_in){
+    int i, j;
+    Img mascara;
+    
+    mascara.linhas = img_in.linhas;
+    mascara.colunas = img_in.colunas;
+    
+    for (i=0; i<mascara.linhas/2; i++){
+        for (j=0; j<mascara.colunas; j++){
+            mascara.M[i][j][0] = 255;
+            mascara.M[i][j][1] = 255;
+            mascara.M[i][j][2] = 255;
+        }
+    }
+    
+    for (i=mascara.linhas/2; i<mascara.linhas; i++){
+        for (j=0; j<mascara.colunas; j++){
+            mascara.M[i][j][0] = 0;
+            mascara.M[i][j][1] = 0;
+            mascara.M[i][j][2] = 0;
+        }
+    }
+    
+    return mascara;
+}
+/*/
 
 /*/
 void binariza(Img img_in, Img& img_out, int limiar){
