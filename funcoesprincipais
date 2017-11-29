@@ -379,6 +379,29 @@ void solariza (Img img_in, Img& img_out, int limiar){
     }
     salva_img("solariza.ppm", img_out);
 }
+
+void separa_canais (Img img_in, Img& img_r, Img& img_g, Img& img_b){
+
+    for (int i=0; i<img_in.linhas; i++){
+        for (int j=0; j<img_in.colunas; j++){
+
+            img_r.M[i][j][0] = img_in.M[i][j][0];//vermelho
+            img_r.M[i][j][1] = 0;
+            img_r.M[i][j][2] = 0;
+
+
+            img_g.M[i][j][1] = img_in.M[i][j][1];//verde
+            img_r.M[i][j][0] = 0;
+            img_r.M[i][j][2] = 0;
+
+            img_b.M[i][j][2] = img_in.M[i][j][2];//azul
+            img_r.M[i][j][0] = 0;
+            img_r.M[i][j][1] = 0;
+
+        }
+    }
+    salva_img("separa_canais.ppm", img_out);
+}
 /*/
 
 int main()
