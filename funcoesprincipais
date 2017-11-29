@@ -213,7 +213,7 @@ void aumenta_tamanho(Img img_in, Img& img_out){
 
 /*/
 void binariza(Img img_in, Img& img_out, int limiar){
-    int i, j, k, aux=0;
+    int i, j;
 
     img_out.linhas = img_in.linhas;
     img_out.colunas = img_in.colunas;
@@ -221,12 +221,12 @@ void binariza(Img img_in, Img& img_out, int limiar){
     for(i=0; i< img_in.linhas; i++){
         for(j=0; j < img_in.colunas; j++){
             int media = (img_in.M[i][j][0] + img_in.M[i][j][1] + img_in.M[i][j][2])/3;
-            if (media <= 127) {
+            if (media < limiar) {
                 img_out.M[i][j][0] = 0;
                 img_out.M[i][j][1] = 0;
                 img_out.M[i][j][2] = 0;
             }
-            if (media > 127) {
+            if (media >= limiar) {
                 img_out.M[i][j][0] = 255;
                 img_out.M[i][j][1] = 255;
                 img_out.M[i][j][2] = 255;
