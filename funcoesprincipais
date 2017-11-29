@@ -261,6 +261,38 @@ void binariza(Img img_in, Img& img_out, int limiar){
 
     salva_img("pretoebranco.ppm", img_out);
 }
+
+void binariza_com_mascara(Img img_in, Img& img_out, int limiar){
+    int i, j;
+
+    img_out.linhas = img_in.linhas;
+    img_out.colunas = img_in.colunas;
+
+    for(i=0; i< img_in.linhas; i++){
+        for(j=0; j < img_in.colunas; j++){
+            if (mascara(img_in).M[i][j][0]==255 && mascara(img_in).M[i][j][1]==255 && mascara(img_in).M[i][j][2]==255){
+                int media = (img_in.M[i][j][0] + img_in.M[i][j][1] + img_in.M[i][j][2])/3;
+                if (media < limiar) {
+                    img_out.M[i][j][0] = 0;
+                    img_out.M[i][j][1] = 0;
+                    img_out.M[i][j][2] = 0;
+                }
+                if (media >= limiar) {
+                    img_out.M[i][j][0] = 255;
+                    img_out.M[i][j][1] = 255;
+                    img_out.M[i][j][2] = 255;
+                }
+            }
+            else {
+                img_out.M[i][j][0] = img_in.M[i][j][0];
+                img_out.M[i][j][1] = img_in.M[i][j][1];
+                img_out.M[i][j][2] = img_in.M[i][j][2];
+            }
+        }
+    }
+
+    salva_img("pretoebranco.ppm", img_out);
+}
 /*/
 
 int main()
