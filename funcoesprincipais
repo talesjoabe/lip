@@ -400,7 +400,10 @@ void separa_canais (Img img_in, Img& img_r, Img& img_g, Img& img_b){
 
         }
     }
-    salva_img("separa_canais.ppm", img_out);
+    salva_img("red.ppm", img_r);
+    salva_img("green.ppm", img_g);
+    salva_img("blue.ppm", img_b);
+    
 }
 /*/
 
