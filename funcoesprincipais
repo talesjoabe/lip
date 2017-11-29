@@ -296,6 +296,24 @@ void binariza_com_mascara(Img img_in, Img& img_out, int limiar){
 
     salva_img("pretoebranco.ppm", img_out);
 }
+
+void cinza(Img img_in, Img& img_out){
+    int i, j;
+
+    img_out.linhas = img_in.linhas;
+    img_out.colunas = img_in.colunas;
+
+    for(i=0; i< img_in.linhas; i++){
+        for(j=0; j < img_in.colunas; j++){
+            int media = (img_in.M[i][j][0] + img_in.M[i][j][1] + img_in.M[i][j][2])/3;
+                img_out.M[i][j][0] = media;
+                img_out.M[i][j][1] = media;
+                img_out.M[i][j][2] = media;
+        }
+    }
+
+    salva_img("cinza.ppm", img_out);
+}
 /*/
 
 int main()
