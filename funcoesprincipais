@@ -314,7 +314,7 @@ void cinza(Img img_in, Img& img_out){
     salva_img("cinza.ppm", img_out);
 }
 
-void negativo (Img img_in, Img img_out){
+void negativo (Img img_in, Img& img_out){
     for (int i=0; i<img_in.linhas; i++){
         for (int j=0; j<img_in.colunas; j++){
             img_out.M[i][j][0] = 255-img_in.M[i][j][0];
@@ -323,6 +323,61 @@ void negativo (Img img_in, Img img_out){
         }
     }
     salva_img("negativo.ppm", img_out);
+}
+
+void binariza_canal (Img img_in, Img& img_out, int limiar){
+    int i, j;
+
+    for(i=0; i<img_in.linhas; i++){
+        for(j=0; j<img_in.colunas; j++){
+
+            if (img_in.M[i][j][0]>=limiar){//vermelho
+                img_out.M[i][j][0]=255;
+            }
+            else {
+                img_out.M[i][j][0]=0;
+            }
+
+            if (img_in.M[i][j][1]>=limiar){//verde
+                img_out.M[i][j][1]=255;
+            }
+            else {
+                img_out.M[i][j][1]=0;
+            }
+
+            if (img_in.M[i][j][2]>=limiar){//azul
+                img_out.M[i][j][2]=255;
+            }
+            else {
+                img_out.M[i][j][2]=0;
+            }
+
+        }
+    }
+    salva_img("binarizar_canal.ppm", img_out);
+}
+
+void solariza (Img img_in, Img& img_out, int limiar){
+    int i, j;
+
+    for(i=0; i<img_in.linhas; i++){
+        for(j=0; j<img_in.colunas; j++){
+
+            if (img_in.M[i][j][0]<limiar){//vermelho
+                img_out.M[i][j][0]=255-img_in.M[i][j][0];
+            }
+
+            if (img_in.M[i][j][1]<limiar){//vermelho
+                img_out.M[i][j][1]=255-img_in.M[i][j][1];
+            }
+
+            if (img_in.M[i][j][2]<limiar){//vermelho
+                img_out.M[i][j][2]=255-img_in.M[i][j][2];
+            }
+
+        }
+    }
+    salva_img("solariza.ppm", img_out);
 }
 /*/
 
