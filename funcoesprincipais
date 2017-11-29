@@ -219,26 +219,19 @@ void binariza(Img img_in, Img& img_out, int limiar){
     img_out.colunas = img_in.colunas;
 
     for(i=0; i< img_in.linhas; i++){
-            for(j=0; j < img_in.colunas; j++){
-                for(k=0; k<3; k++){
-                    aux= aux + img_in.M[i][j][k];
-
-                    if(k==2){
-                        if((aux/3)<limiar){
-                            img_out.M[i][j][0]=0;
-                            img_out.M[i][j][1]=0;
-                            img_out.M[i][j][2]=0;
-                        }
-
-                        else{
-                            img_out.M[i][j][0]=255;
-                            img_out.M[i][j][1]=255;
-                            img_out.M[i][j][2]=255;
-                        }
-                    }
-                }
-                aux=0;
+        for(j=0; j < img_in.colunas; j++){
+            int media = (img_in.M[i][j][0] + img_in.M[i][j][1] + img_in.M[i][j][2])/3;
+            if (media <= 127) {
+                img_out.M[i][j][0] = 0;
+                img_out.M[i][j][1] = 0;
+                img_out.M[i][j][2] = 0;
             }
+            if (media > 127) {
+                img_out.M[i][j][0] = 255;
+                img_out.M[i][j][1] = 255;
+                img_out.M[i][j][2] = 255;
+            }
+        }
     }
 
     salva_img("pretoebranco.ppm", img_out);
