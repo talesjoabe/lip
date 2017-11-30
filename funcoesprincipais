@@ -73,7 +73,7 @@ void salva_img(char nome[],Img img){
     }
 }
 
-/*/void corta_rgb(Img img_in, Img& img_out, int li, int ci, int lf, int cf){
+void corta_rgb(Img img_in, Img& img_out, int li, int ci, int lf, int cf){
 
     char nome[]= "lake.ppm";
 
@@ -81,7 +81,19 @@ void salva_img(char nome[],Img img){
 
     for(i=li; i<=lf; i++){
         for(j=ci; j<=cf; j++){
-            for(k=0; k<3; k++){void diminui_tamanho(Img img_in, Img& img_out){
+            for(k=0; k<3; k++){
+                img_out.M[i][j][k] = img_in.M[i][j][k];
+            }
+        }
+    }
+
+    img_out.linhas= lf-li;
+    img_out.colunas= cf-ci;
+
+    salva_img("Nova_imagem_cortada.ppm", img_out);
+}
+
+void diminui_tamanho(Img img_in, Img& img_out){
     int i=0, j=0, k, linhas, colunas;
 
     for(linhas=0; linhas<img_in.linhas; linhas++){
@@ -103,36 +115,24 @@ void salva_img(char nome[],Img img){
     img_out.linhas= img_in.linhas/2;
     img_out.colunas= img_in.colunas/2;
 
-    salva_img("Nova_imagem_reduzida123.ppm", img_out);
+    salva_img("Nova_imagem_reduzida.ppm", img_out);
 }
-                img_out.M[i][j][k] = img_in.M[i][j][k];
-            }
-        }
-    }
 
-    img_out.linhas= lf-li;
-    img_out.colunas= cf-ci;
-
-    salva_img("Nova_imagem.ppm", img_out);
-}
-/*/
-
-/*/
 void rotaciona(Img img_in, Img& img_out){
     int i, j, k;
 
     img_out.linhas= img_in.colunas;
     img_out.colunas = img_in.linhas;
 
-    for(i=0; i<=img_in.linhas; i++){
-        for(j=0; j<=img_in.colunas; j++){
+    for(i=0; i<img_in.linhas; i++){
+        for(j=0; j<img_in.colunas; j++){
             for(k=0; k<3; k++){
                 img_out.M[i][j][k] = img_in.M[img_in.colunas-j][i][k];
             }
         }
     }
 
-    salva_img("Nova_imagem_rotacionada.ppm", img_out);
+    salva_img("Nova_imagem_rotacionada1.ppm", img_out);
 }
 
 void rotaciona_antihorario(Img img_in, Img& img_out){
@@ -141,10 +141,10 @@ void rotaciona_antihorario(Img img_in, Img& img_out){
     img_out.linhas= img_in.colunas;
     img_out.colunas = img_in.linhas;
 
-    for(i=0; i<=img_in.linhas; i++){
-        for(j=0; j<=img_in.colunas; j++){
+    for(i=0; i<img_in.linhas; i++){
+        for(j=0; j<img_in.colunas; j++){
             for(k=0; k<3; k++){
-                img_out.M[img_out.linhas-1-j][img_out.linhas-1-i][k] = img_in.M[i][j][k];
+                img_out.M[i][j][k] = img_in.M[j][img_in.linhas-i][k];
             }
         }
     }
@@ -152,35 +152,7 @@ void rotaciona_antihorario(Img img_in, Img& img_out){
     salva_img("Nova_imagem_rotacionada_antihorario.ppm", img_out);
 }
 
-/*/
-
-/*/void diminui_tamanho(Img img_in, Img& img_out){
-    int i=0, j=0, k, linhas=0, colunas=0;
-
-    img_out.linhas= img_in.linhas/2;
-    img_out.colunas= img_in.colunas/2;
-
-    for(i=0; linhas<=img_out.linhas; linhas++){
-        if(i%2!=0){
-            i++;
-        }
-        for(colunas=0; colunas<=img_in.colunas; colunas++){
-            if(j%2!=0){
-                j++;
-            }
-            for(k=0; k<3; k++){
-                img_out.M[linhas][colunas][k] = img_in.M[i][j][k];
-            }
-            j++;
-        }
-        j=0;
-        i++;
-    }
-
-    salva_img("oi.ppm", img_out);
-}
-/*/
-/*/void aumenta_tamanho(Img img_in, Img& img_out){
+void aumenta_tamanho(Img img_in, Img& img_out){
     int i1,j1,i2,j2,k;
     img_out.colunas=2*img_in.colunas-1;
     img_out.linhas=2*img_in.linhas-1;
@@ -226,10 +198,8 @@ void rotaciona_antihorario(Img img_in, Img& img_out){
         }
     }
     salva_img("imagem_aumentada.ppm", img_out);
-}/*/
+}
 
-
-/*/
 Img mascara (Img img_in){
     int i, j;
     Img mascara;
@@ -255,9 +225,7 @@ Img mascara (Img img_in){
 
     return mascara;
 }
-/*/
 
-/*/
 void binariza(Img img_in, Img& img_out, int limiar){
     int i, j;
 
@@ -280,7 +248,7 @@ void binariza(Img img_in, Img& img_out, int limiar){
         }
     }
 
-    salva_img("pretoebranco.ppm", img_out);
+    salva_img("pretoebranco1.ppm", img_out);
 }
 
 void binariza_com_mascara(Img img_in, Img& img_out, int limiar){
@@ -454,9 +422,9 @@ void separa_canais (Img img_in, Img& img_r, Img& img_g, Img& img_b){
     salva_img("blue.ppm", img_b);
 
 }
-/*/
 
-/*/void inverte_verticalmente(Img img_in, Img& img_out){
+
+void inverte_verticalmente(Img img_in, Img& img_out){
     int i, j, k;
 
     img_out.linhas= img_in.linhas;
@@ -471,9 +439,9 @@ void separa_canais (Img img_in, Img& img_r, Img& img_g, Img& img_b){
     }
 
     salva_img("Nova_imagem_invertida_verticalmente.ppm", img_out);
-}/*/
+}
 
-/*/void inverte_horizontalmente(Img img_in, Img& img_out){
+void inverte_horizontalmente(Img img_in, Img& img_out){
     int i, j, k;
 
     img_out.linhas= img_in.linhas;
@@ -488,37 +456,46 @@ void separa_canais (Img img_in, Img& img_r, Img& img_g, Img& img_b){
     }
 
     salva_img("Nova_imagem_invertida_horizontalmente.ppm", img_out);
-}/*/
+}
 
 void reflete_horizontalmente(Img img_in, Img& img_out){
-    int i, j, k, metadedacoluna= img_in.colunas/2;
+    int i, j, k;
+    img_out.linhas= img_in.linhas;
+    img_out.colunas = img_in.colunas;
+
+    for(j=0; j<=img_in.colunas/2; j++){
+        for(i=0; i<img_in.linhas; i++){
+            for(k=0; k<3; k++){
+                img_out.M[i][j][k] = img_in.M[i][j][k];
+                img_out.M[i][img_in.colunas-j][k] = img_in.M[i][j][k];
+            }
+        }
+    }
+
+    salva_img("Nova_imagem_refletida_horizontalmente1.ppm", img_out);
+}
+
+void reflete_verticalmente(Img img_in, Img& img_out){
+    int i, j, k;
 
     img_out.linhas= img_in.linhas;
     img_out.colunas = img_in.colunas;
 
-    for(j=0; j<img_in.colunas; j++){
-        for(i=0; i<img_in.linhas; i++){
+    for(i=0; i<=img_in.linhas/2; i++){
+        for(j=0; j<img_in.colunas; j++){
             for(k=0; k<3; k++){
-                    if(j>=metadedacoluna){
-                        img_out.M[i][j][k] = img_in.M[i][metadedacoluna][k];
-                    }
-
-                    else{
-                        img_out.M[i][j][k] = img_in.M[i][j][k];
-                    }
+                img_out.M[i][j][k] = img_in.M[img_in.linhas-i][j][k];
+                // ta com problema img_out.M[img_in.linhas-i][j][k] = img_in.M[img_in.linhas-i][j][k];
             }
-        }
-        if(j>metadedacoluna){
-            metadedacoluna--;
         }
     }
 
-    salva_img("Nova_imagem_refletida_horizontalmente.ppm", img_out);
+    salva_img("Nova_imagem_refletida_verti.ppm", img_out);
 }
-void filtragem_por_erosao(Img img_in, Img& img_out)
-{
+
+void filtragem_por_erosao(Img img_in, Img& img_out){
     int i,j,k;
-    binariza(img_in,img_out);
+    binariza(img_in,img_out, 127);
     img_out.linhas = img_in.linhas-1;
     img_out.colunas = img_in.colunas-1;
 
@@ -540,13 +517,13 @@ void filtragem_por_erosao(Img img_in, Img& img_out)
             }
         }
     }
-    salvar_img ("filtragem_por_erosao.ppm", img_out);
+    salva_img ("filtragem_por_erosao.ppm", img_out);
 }
 
 void filtragem_por_dilatacao(Img img_in, Img& img_out)
 {
     int i,j,k;
-    binariza(img_in,img_out);
+    binariza(img_in,img_out,127);
     img_out.linhas = img_in.linhas-1;
     img_out.colunas = img_in.colunas-1;
 
@@ -576,15 +553,15 @@ void filtragem_por_dilatacao(Img img_in, Img& img_out)
 int main(){
 
     setlocale(LC_ALL, "Portuguese"); // permite a utilização de acentos provenientes da lingua portuguesa
-    Img img, img_out;
+    Img img;
     int x;
-    cout << endl<<"Informe o nome do arquivo que voce deseja abrir: " << endl;
+
+    //cout << endl<<"Informe o nome do arquivo que voce deseja abrir: " << endl;
 
     abre_img("lena.ppm", img);
-    reflete_horizontalmente(img, img_out);
     cout<<endl<<endl<<endl;
 
-   /*/ do{
+    do{
 
         //Menu da função
 
@@ -602,8 +579,8 @@ int main(){
         cout<<" \t 11- Refletir imagem (horizontalmente) \n ";
         cout<<" \t 12- Refletir imagem (verticalmente) \n ";
         cout<<" \t 13- Reduzir tamanho \n ";
-        cout<<" \t 14- Filtrar com Passa Baixas (tamanho fixo) \n ";
-        cout<<" \t 15- Aumentar tamanho \n ";
+        cout<<" \t 14- Aumentar tamanho \n ";
+        cout<<" \t 15- Filtrar com Passa Baixas (tamanho fixo) \n";
         cout<<" \t 16- Filtrar com erosao \n ";
         cout<<" \t 17- Filtrar com dilatacao \n ";
         cout<<" \t 18- Filtrar com Passa Altas \n ";
@@ -613,12 +590,121 @@ int main(){
         cout<<" \t 22- Mascara \n ";
         cout<<" \t 23- Sair \n ";
 
-        switch(){
- +
- +      }
+        cout << "Qual opção você deseja escolher? ";
+        cin >> x;
+
+        switch(x){
+            case 1:
+                Img acinzentada;
+                cinza(img, acinzentada);
+            break;
+
+            case 2:
+                Img pretoebranco;
+                binariza(img, pretoebranco,127);
+            break;
+            case 3:
+                Img canal;
+                binariza_canal(img, canal, 127);
+            break;
+
+            case 4:
+                Img ngt;
+                negativo(img, ngt);
+            break;
+
+            case 5:
+                Img solarizada;
+                solariza(img, solarizada, 127);
+            break;
+
+            case 6:
+                Img red, green, blue;
+                separa_canais(img, red, green, blue);
+            break;
+
+            case 7:
+                Img horario;
+                rotaciona(img, horario);
+            break;
+
+            case 8:
+                Img antihorario;
+                rotaciona_antihorario(img, antihorario);
+            break;
+
+            case 9:
+                Img invertidahorizontalmente;
+                inverte_horizontalmente(img, invertidahorizontalmente);
+            break;
+
+            case 10:
+                Img invertidaverticalmente;
+                inverte_verticalmente(img, invertidaverticalmente);
+            break;
+
+            case 11:
+                Img refletida_horizontalmente;
+                reflete_horizontalmente(img, refletida_horizontalmente);
+            break;
+
+            case 12:
+                Img refletida_verticalmente;
+                reflete_verticalmente(img, refletida_verticalmente);
+            break;
+
+            case 13:
+                Img tamanhoreduzido;
+                diminui_tamanho(img, tamanhoreduzido);
+            break;
+
+            case 14:
+                Img tamanhoaumentado;
+                aumenta_tamanho(img, tamanhoaumentado);
+            break;
+
+            case 15:
+
+            break;
+
+            case 16:
+                Img filtrada_erosao;
+                filtragem_por_erosao(img, filtrada_erosao);
+            break;
+
+            case 17:
+                Img filtrada_dilatacao;
+                filtragem_por_dilatacao(img, filtrada_dilatacao);
+            break;
+
+            case 18:
+
+            break;
+
+            case 19:
+                Img equalizada_histograma;
+                equaliza_histograma(img, equalizada_histograma);
+            break;
+
+            case 20:
+
+            break;
+
+            case 21:
+
+            break;
+
+            case 22:
+                mascara(img);
+            break;
+
+            case 23:
+                cout << "xau xau";
+            break;
+
+        }
 
     }while(x!=23);
-    /*/
-    return 0;
 
+    return 0;
 }
