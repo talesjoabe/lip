@@ -394,6 +394,10 @@ void solariza (Img img_in, Img& img_out, int limiar){
 
         }
     }
+
+    img_out.linhas = img_in.linhas;
+    img_out.colunas = img_in.colunas;
+
     salva_img("solariza.ppm", img_out);
 }
 
@@ -632,7 +636,7 @@ int main(){
 
             case 5:
                 Img solarizada;
-                solariza(img, solarizada, 127);
+                solariza(img, solarizada, 55);
             break;
 
             case 6:
