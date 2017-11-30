@@ -417,6 +417,16 @@ void separa_canais (Img img_in, Img& img_r, Img& img_g, Img& img_b){
 
         }
     }
+
+    img_r.colunas= img_in.colunas;
+    img_r.linhas= img_in.linhas;
+
+    img_g.colunas= img_in.colunas;
+    img_g.linhas= img_in.linhas;
+
+    img_b.colunas= img_in.colunas;
+    img_b.linhas= img_in.linhas;
+
     salva_img("red.ppm", img_r);
     salva_img("green.ppm", img_g);
     salva_img("blue.ppm", img_b);
