@@ -543,6 +543,34 @@ void filtragem_por_erosao(Img img_in, Img& img_out)
     salvar_img ("filtragem_por_erosao.ppm", img_out);
 }
 
+void filtragem_por_dilatacao(Img img_in, Img& img_out)
+{
+    int i,j,k;
+    binariza(img_in,img_out);
+    img_out.linhas = img_in.linhas-1;
+    img_out.colunas = img_in.colunas-1;
+
+    for(i=0; i<img_out.linhas; i++)
+    {
+        for(j=0; j<img_out.colunas; j++)
+        {
+            for(k=0; k<3; k++)
+            {
+                if(img_in.M[i][j][k]==1 || img_in.M[i+1][j][k]==1 || img_in.M[i][j+1][k]==1 || img_in.M[i+1][j+1][k]==1)
+                {
+                    img_out.M[i][j][k]= 255;
+                }
+                else
+                {
+                    img_out.M[i][j][k]= 0;
+                }
+
+            }
+        }
+    }
+    salva_img("filtragem_por_dilatacao.ppm", img_out);
+}
+
 
 
 int main(){
