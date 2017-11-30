@@ -343,7 +343,7 @@ void negativo (Img img_in, Img& img_out){
     salva_img("negativo.ppm", img_out);
 }
 
-void binariza_canal (Img img_in, Img& img_out, int limiar){
+void binariza_canal(Img img_in, Img& img_out, int limiar){
     int i, j;
 
     for(i=0; i<img_in.linhas; i++){
@@ -490,72 +490,79 @@ void separa_canais (Img img_in, Img& img_r, Img& img_g, Img& img_b){
     salva_img("Nova_imagem_invertida_horizontalmente.ppm", img_out);
 }/*/
 
+void reflete_horizontalmente(Img img_in, Img& img_out){
+    int i, j, k, metadedacoluna= img_in.colunas/2;
 
-int main()
-{
-    //
-    #include <iostream>
+    img_out.linhas= img_in.linhas;
+    img_out.colunas = img_in.colunas;
 
-using namespace std;
+    for(j=0; j<img_in.colunas; j++){
+        for(i=0; i<img_in.linhas; i++){
+            for(k=0; k<3; k++){
+                    if(j>=metadedacoluna){
+                        img_out.M[i][j][k] = img_in.M[i][metadedacoluna][k];
+                    }
 
-int main()
-{
+                    else{
+                        img_out.M[i][j][k] = img_in.M[i][j][k];
+                    }
+            }
+        }
+        if(j>metadedacoluna){
+            metadedacoluna--;
+        }
+    }
+
+    salva_img("Nova_imagem_refletida_horizontalmente.ppm", img_out);
+}
+
+
+int main(){
+
     setlocale(LC_ALL, "Portuguese"); // permite a utilização de acentos provenientes da lingua portuguesa
     Img img, img_out;
     int x;
-    cout <<endl<<"Informe o nome do arquivo que voce deseja abrir: " << endl;
-    cin>>nome;
-    abre_img(nome, img);
+    cout << endl<<"Informe o nome do arquivo que voce deseja abrir: " << endl;
+
+    abre_img("lena.ppm", img);
+    reflete_horizontalmente(img, img_out);
     cout<<endl<<endl<<endl;
-    do{
 
-   //Menu da função
+   /*/ do{
 
-    cout<<endl<<"Selecione uma das opcoes:\n";
-    cout<<" \t 1 - Converter para niveis de cinza \n";
-    cout<<" \t 2 - Binarizar (preto e branco)\n ";
-    cout<<" \t 3 - Binarizar (por canal) \n ";
-    cout<<" \t 4 - Computar negativo \n ";
-    cout<<" \t 5 - Solarizar \n ";
-    cout<<" \t 6 - Separa canais \n";
-    cout<<" \t 7 - Rotacionar imagem (horario) \n ";
-    cout<<" \t 8 - Rotacionar imagem (anti-horario) \n ";
-    cout<<" \t 9 - Inverter imagem (horizontalmente) \n ";
-    cout<<" \t 10- Inverter imagem (verticalmente) \n ";
-    cout<<" \t 11- Refletir imagem (horizontalmente) \n ";
-    cout<<" \t 12- Refletir imagem (verticalmente) \n ";
-    cout<<" \t 13- Reduzir tamanho \n ";
-    cout<<" \t 14- Filtrar com Passa Baixas (tamanho fixo) \n ";
-    cout<<" \t 15- Aumentar tamanho \n ";
-    cout<<" \t 16- Filtrar com erosao \n ";
-    cout<<" \t 17- Filtrar com dilatacao \n ";
-    cout<<" \t 18- Filtrar com Passa Altas \n ";
-    cout<<" \t 19- Equalizar Histograma \n ";
-    cout<<" \t 20- Filtrar com Mediana \n ";
-    cout<<" \t 21- Filtrar com Passa Baixas (tamanho variavel) \n";
-    cout<<" \t 22- Mascara \n ";
-    cout<<" \t 23- Sair \n ";
+        //Menu da função
 
-    //
+        cout<<endl<<"Selecione uma das opcoes:\n";
+        cout<<" \t 1 - Converter para niveis de cinza \n";
+        cout<<" \t 2 - Binarizar (preto e branco)\n ";
+        cout<<" \t 3 - Binarizar (por canal) \n ";
+        cout<<" \t 4 - Computar negativo \n ";
+        cout<<" \t 5 - Solarizar \n ";
+        cout<<" \t 6 - Separa canais \n";
+        cout<<" \t 7 - Rotacionar imagem (horario) \n ";
+        cout<<" \t 8 - Rotacionar imagem (anti-horario) \n ";
+        cout<<" \t 9 - Inverter imagem (horizontalmente) \n ";
+        cout<<" \t 10- Inverter imagem (verticalmente) \n ";
+        cout<<" \t 11- Refletir imagem (horizontalmente) \n ";
+        cout<<" \t 12- Refletir imagem (verticalmente) \n ";
+        cout<<" \t 13- Reduzir tamanho \n ";
+        cout<<" \t 14- Filtrar com Passa Baixas (tamanho fixo) \n ";
+        cout<<" \t 15- Aumentar tamanho \n ";
+        cout<<" \t 16- Filtrar com erosao \n ";
+        cout<<" \t 17- Filtrar com dilatacao \n ";
+        cout<<" \t 18- Filtrar com Passa Altas \n ";
+        cout<<" \t 19- Equalizar Histograma \n ";
+        cout<<" \t 20- Filtrar com Mediana \n ";
+        cout<<" \t 21- Filtrar com Passa Baixas (tamanho variavel) \n";
+        cout<<" \t 22- Mascara \n ";
+        cout<<" \t 23- Sair \n ";
 
-    switch(){
-
-    }
+        switch(){
+ +
+ +      }
 
     }while(x!=23);
+    /*/
     return 0;
-}
 
-    
-    //setlocale(LC_ALL, "Portuguese"); // permite a utilização de acentos provenientes da lingua portuguesa
-    Img img, img_out;
-
-    char nome[]="lena.ppm";
-
-    //cout << "Informe o nome do arquivo que vc deseja abrir: " << endl;
-
-    abre_img(nome, img);
-    reflete_horizontalmente(img, img_out);
-
-    return 0;
 }
