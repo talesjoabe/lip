@@ -459,24 +459,27 @@ void inverte_horizontalmente(Img img_in, Img& img_out){
 }
 
 void reflete_horizontalmente(Img img_in, Img& img_out){
-    int i, j, k;
+    int i, j, k, meio_fim=img_in.colunas/2, meio_inicio=img_in.colunas/2;
+
     img_out.linhas= img_in.linhas;
     img_out.colunas = img_in.colunas;
 
     for(j=0; j<=img_in.colunas/2; j++){
         for(i=0; i<img_in.linhas; i++){
             for(k=0; k<3; k++){
-                img_out.M[i][j][k] = img_in.M[i][j][k];
-                img_out.M[i][img_in.colunas-j][k] = img_in.M[i][j][k];
+                img_out.M[i][meio_inicio][k] = img_in.M[i][img_in.colunas/2+j][k];
+                img_out.M[i][meio_fim][k] = img_in.M[i][img_in.colunas/2+j][k];
             }
         }
+        meio_inicio--;
+        meio_fim++;
     }
 
     salva_img("Nova_imagem_refletida_horizontalmente1.ppm", img_out);
 }
 
 void reflete_verticalmente(Img img_in, Img& img_out){
-    int i, j, k;
+    int i, j, k, meio_fim=img_in.linhas/2, meio_inicio=img_in.linhas/2;
 
     img_out.linhas= img_in.linhas;
     img_out.colunas = img_in.colunas;
@@ -484,11 +487,14 @@ void reflete_verticalmente(Img img_in, Img& img_out){
     for(i=0; i<=img_in.linhas/2; i++){
         for(j=0; j<img_in.colunas; j++){
             for(k=0; k<3; k++){
-                img_out.M[i][j][k] = img_in.M[img_in.linhas-i][j][k];
-                // ta com problema img_out.M[img_in.linhas-i][j][k] = img_in.M[img_in.linhas-i][j][k];
+                img_out.M[meio_inicio][j][k] = img_in.M[img_in.linhas/2+i][j][k];
+                img_out.M[meio_fim][j][k] = img_in.M[img_in.linhas/2+i][j][k];
             }
         }
+        meio_inicio--;
+        meio_fim++;
     }
+
 
     salva_img("Nova_imagem_refletida_verti.ppm", img_out);
 }
@@ -588,7 +594,8 @@ int main(){
         cout<<" \t 20- Filtrar com Mediana \n ";
         cout<<" \t 21- Filtrar com Passa Baixas (tamanho variavel) \n";
         cout<<" \t 22- Mascara \n ";
-        cout<<" \t 23- Sair \n ";
+        cout <<"\t 23- Cortar imagem \n";
+        cout<<"\t 24- Sair \n ";
 
         cout << "Qual opção você deseja escolher? ";
         cin >> x;
@@ -699,12 +706,16 @@ int main(){
             break;
 
             case 23:
+
+            break;
+
+            case 24:
                 cout << "xau xau";
             break;
 
         }
 
-    }while(x!=23);
+    }while(x!=24);
 
     return 0;
 }
