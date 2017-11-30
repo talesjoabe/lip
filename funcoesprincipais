@@ -493,7 +493,61 @@ void separa_canais (Img img_in, Img& img_r, Img& img_g, Img& img_b){
 
 int main()
 {
+    //
+    #include <iostream>
+
+using namespace std;
+
+int main()
+{
     setlocale(LC_ALL, "Portuguese"); // permite a utilização de acentos provenientes da lingua portuguesa
+    Img img, img_out;
+    int x;
+    cout <<endl<<"Informe o nome do arquivo que voce deseja abrir: " << endl;
+    cin>>nome;
+    abre_img(nome, img);
+    cout<<endl<<endl<<endl;
+    do{
+
+   //Menu da função
+
+    cout<<endl<<"Selecione uma das opcoes:\n";
+    cout<<" \t 1 - Converter para niveis de cinza \n";
+    cout<<" \t 2 - Binarizar (preto e branco)\n ";
+    cout<<" \t 3 - Binarizar (por canal) \n ";
+    cout<<" \t 4 - Computar negativo \n ";
+    cout<<" \t 5 - Solarizar \n ";
+    cout<<" \t 6 - Separa canais \n";
+    cout<<" \t 7 - Rotacionar imagem (horario) \n ";
+    cout<<" \t 8 - Rotacionar imagem (anti-horario) \n ";
+    cout<<" \t 9 - Inverter imagem (horizontalmente) \n ";
+    cout<<" \t 10- Inverter imagem (verticalmente) \n ";
+    cout<<" \t 11- Refletir imagem (horizontalmente) \n ";
+    cout<<" \t 12- Refletir imagem (verticalmente) \n ";
+    cout<<" \t 13- Reduzir tamanho \n ";
+    cout<<" \t 14- Filtrar com Passa Baixas (tamanho fixo) \n ";
+    cout<<" \t 15- Aumentar tamanho \n ";
+    cout<<" \t 16- Filtrar com erosao \n ";
+    cout<<" \t 17- Filtrar com dilatacao \n ";
+    cout<<" \t 18- Filtrar com Passa Altas \n ";
+    cout<<" \t 19- Equalizar Histograma \n ";
+    cout<<" \t 20- Filtrar com Mediana \n ";
+    cout<<" \t 21- Filtrar com Passa Baixas (tamanho variavel) \n";
+    cout<<" \t 22- Mascara \n ";
+    cout<<" \t 23- Sair \n ";
+
+    //
+
+    switch(){
+
+    }
+
+    }while(x!=23);
+    return 0;
+}
+
+    
+    //setlocale(LC_ALL, "Portuguese"); // permite a utilização de acentos provenientes da lingua portuguesa
     Img img, img_out;
 
     char nome[]="lena.ppm";
