@@ -180,7 +180,7 @@ void rotaciona_antihorario(Img img_in, Img& img_out){
     salva_img("oi.ppm", img_out);
 }
 /*/
-void aumenta_tamanho(Img img_in, Img& img_out){
+/*/void aumenta_tamanho(Img img_in, Img& img_out){
     int i1,j1,i2,j2,k;
     img_out.colunas=2*img_in.colunas-1;
     img_out.linhas=2*img_in.linhas-1;
@@ -226,7 +226,7 @@ void aumenta_tamanho(Img img_in, Img& img_out){
         }
     }
     salva_img("imagem_aumentada.ppm", img_out);
-}
+}/*/
 
 
 /*/
@@ -452,9 +452,44 @@ void separa_canais (Img img_in, Img& img_r, Img& img_g, Img& img_b){
     salva_img("red.ppm", img_r);
     salva_img("green.ppm", img_g);
     salva_img("blue.ppm", img_b);
-    
+
 }
 /*/
+
+/*/void inverte_verticalmente(Img img_in, Img& img_out){
+    int i, j, k;
+
+    img_out.linhas= img_in.linhas;
+    img_out.colunas = img_in.colunas;
+
+    for(i=0; i<img_in.linhas; i++){
+        for(j=0; j<img_in.colunas; j++){
+            for(k=0; k<3; k++){
+                img_out.M[i][j][k] = img_in.M[img_in.linhas-i][j][k];
+            }
+        }
+    }
+
+    salva_img("Nova_imagem_invertida_verticalmente.ppm", img_out);
+}/*/
+
+/*/void inverte_horizontalmente(Img img_in, Img& img_out){
+    int i, j, k;
+
+    img_out.linhas= img_in.linhas;
+    img_out.colunas = img_in.colunas;
+
+    for(i=0; i<img_in.linhas; i++){
+        for(j=0; j<img_in.colunas; j++){
+            for(k=0; k<3; k++){
+                img_out.M[i][j][k] = img_in.M[i][img_in.colunas-j][k];
+            }
+        }
+    }
+
+    salva_img("Nova_imagem_invertida_horizontalmente.ppm", img_out);
+}/*/
+
 
 int main()
 {
@@ -466,6 +501,7 @@ int main()
     //cout << "Informe o nome do arquivo que vc deseja abrir: " << endl;
 
     abre_img(nome, img);
+    reflete_horizontalmente(img, img_out);
 
     return 0;
 }
