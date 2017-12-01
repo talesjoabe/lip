@@ -21,7 +21,6 @@ void abre_img(char nome[], Img& img){
     arq.open(nome);
 
     if(arq.is_open()){
-        //cout << "Está aberto!\n";
         arq.getline(tipo, 3);
         if(strcmp("P3",tipo)!=0){
             cout<<"ERRO\n";
@@ -44,7 +43,7 @@ void abre_img(char nome[], Img& img){
     }
 
     else{
-        cout << "Não está aberto!\n";
+        cout << nome << " não foi localizada. Verifique se esta imagem está contida na pasta!\n";
         exit(0);
     }
 }
@@ -73,11 +72,19 @@ void salva_img(char nome[],Img img){
     }
 }
 
+void escolha_nome(char nome[]){
+    cout << "Como você deseja salvar o arquivo? ";
+    cin >> nome;
+}
+
 void corta_rgb(Img img_in, Img& img_out, int li, int ci, int lf, int cf){
 
-    char nome[]= "lake.ppm";
+    char nome[50];
 
     int i, j, k;
+
+    img_out.linhas= lf-li;
+    img_out.colunas= cf-ci;
 
     for(i=li; i<=lf; i++){
         for(j=ci; j<=cf; j++){
@@ -87,20 +94,29 @@ void corta_rgb(Img img_in, Img& img_out, int li, int ci, int lf, int cf){
         }
     }
 
-    img_out.linhas= lf-li;
-    img_out.colunas= cf-ci;
+    escolha_nome(nome);
+    salva_img(nome, img_out);
+}
 
-    salva_img("Nova_imagem_cortada.ppm", img_out);
+void escolha_limiar(int& limiar){
+
+    cout << endl<< "Qual é o limiar desejado por você? ";
+    cin >> limiar;
+
 }
 
 void diminui_tamanho(Img img_in, Img& img_out){
     int i=0, j=0, k, linhas, colunas;
+    char nome[50];
 
-    for(linhas=0; linhas<img_in.linhas; linhas++){
+    img_out.linhas= img_in.linhas/2;
+    img_out.colunas= img_in.colunas/2;
+
+    for(linhas=0; linhas<img_out.linhas; linhas++){
         if(i%2!=0){
             i++;
         }
-        for(colunas=0; colunas<img_in.colunas; colunas++){
+        for(colunas=0; colunas<img_out.colunas; colunas++){
             if(j%2!=0){
                 j++;
             }
@@ -109,17 +125,18 @@ void diminui_tamanho(Img img_in, Img& img_out){
             }
             j++;
         }
+        j=0;
         i++;
     }
 
-    img_out.linhas= img_in.linhas/2;
-    img_out.colunas= img_in.colunas/2;
 
-    salva_img("Nova_imagem_reduzida.ppm", img_out);
+    escolha_nome(nome);
+    salva_img(nome, img_out);
 }
 
 void rotaciona(Img img_in, Img& img_out){
     int i, j, k;
+    char nome[50];
 
     img_out.linhas= img_in.colunas;
     img_out.colunas = img_in.linhas;
@@ -132,11 +149,13 @@ void rotaciona(Img img_in, Img& img_out){
         }
     }
 
-    salva_img("Nova_imagem_rotacionada1.ppm", img_out);
+    escolha_nome(nome);
+    salva_img(nome, img_out);
 }
 
 void rotaciona_antihorario(Img img_in, Img& img_out){
     int i, j, k;
+    char nome[50];
 
     img_out.linhas= img_in.colunas;
     img_out.colunas = img_in.linhas;
@@ -149,11 +168,14 @@ void rotaciona_antihorario(Img img_in, Img& img_out){
         }
     }
 
-    salva_img("Nova_imagem_rotacionada_antihorario.ppm", img_out);
+    escolha_nome(nome);
+    salva_img(nome, img_out);
 }
 
 void aumenta_tamanho(Img img_in, Img& img_out){
     int i1,j1,i2,j2,k;
+    char nome[50];
+
     img_out.colunas=2*img_in.colunas-1;
     img_out.linhas=2*img_in.linhas-1;
 
@@ -197,7 +219,10 @@ void aumenta_tamanho(Img img_in, Img& img_out){
             }
         }
     }
-    salva_img("imagem_aumentada.ppm", img_out);
+
+
+    escolha_nome(nome);
+    salva_img(nome, img_out);
 }
 
 Img mascara (Img& img_in){
@@ -223,6 +248,7 @@ Img mascara (Img& img_in){
 
 void binariza(Img img_in, Img& img_out, int limiar){
     int i, j;
+    char nome[50];
 
     img_out.linhas = img_in.linhas;
     img_out.colunas = img_in.colunas;
@@ -243,11 +269,13 @@ void binariza(Img img_in, Img& img_out, int limiar){
         }
     }
 
-    salva_img("pretoebranco1.ppm", img_out);
+    escolha_nome(nome);
+    salva_img(nome, img_out);
 }
 
 void binariza_com_mascara(Img img_in, Img& img_out, int limiar){
     int i, j, media;
+    char nome[50];
     Img aux= img_in;
 
     img_out.linhas = img_in.linhas;
@@ -278,11 +306,13 @@ void binariza_com_mascara(Img img_in, Img& img_out, int limiar){
         }
     }
 
-    salva_img("pretoebrancocommascara.ppm", img_out);
+    escolha_nome(nome);
+    salva_img(nome, img_out);
 }
 
 void cinza(Img img_in, Img& img_out){
     int i, j;
+    char nome[50];
 
     img_out.linhas = img_in.linhas;
     img_out.colunas = img_in.colunas;
@@ -295,10 +325,14 @@ void cinza(Img img_in, Img& img_out){
                 img_out.M[i][j][2] = media;
         }
     }
-    salva_img("cinza.ppm", img_out);
+
+    escolha_nome(nome);
+    salva_img(nome, img_out);
 }
 
 void negativo (Img img_in, Img& img_out){
+    char nome[50];
+
     for (int i=0; i<img_in.linhas; i++){
         for (int j=0; j<img_in.colunas; j++){
             img_out.M[i][j][0] = 255-img_in.M[i][j][0];
@@ -306,11 +340,17 @@ void negativo (Img img_in, Img& img_out){
             img_out.M[i][j][2] = 255-img_in.M[i][j][2];
         }
     }
-    salva_img("negativo.ppm", img_out);
+
+    escolha_nome(nome);
+    salva_img(nome, img_out);
 }
 
 void binariza_canal(Img img_in, Img& img_out, int limiar){
     int i, j;
+    char nome[50];
+
+    img_out.linhas = img_in.linhas;
+    img_out.colunas = img_in.colunas;
 
     for(i=0; i<img_in.linhas; i++){
         for(j=0; j<img_in.colunas; j++){
@@ -338,10 +378,14 @@ void binariza_canal(Img img_in, Img& img_out, int limiar){
 
         }
     }
-    salva_img("binarizar_canal.ppm", img_out);
+
+    escolha_nome(nome);
+    salva_img(nome,img_out);
 }
 
 void equaliza_histograma(Img img_in, Img& img_out){
+    char nome[50];
+
     img_out.linhas=img_in.linhas;
     img_out.colunas=img_in.colunas;
 
@@ -368,35 +412,34 @@ void equaliza_histograma(Img img_in, Img& img_out){
         }
     }
 
-
+    escolha_nome(nome);
+    salva_img(nome, img_out);
 
 }
 
 void solariza (Img img_in, Img& img_out, int limiar){
-    int i, j;
+    int i, j,k;
+    char nome[50];
 
     for(i=0; i<img_in.linhas; i++){
         for(j=0; j<img_in.colunas; j++){
+            for(k=0; k<3; k++){
+                if (img_in.M[i][j][0]<limiar){//vermelho
+                    img_out.M[i][j][k]=255-img_in.M[i][j][k];
+                }
 
-            if (img_in.M[i][j][0]<limiar){//vermelho
-                img_out.M[i][j][0]=255-img_in.M[i][j][0];
+                else{
+                    img_out.M[i][j][k]=img_in.M[i][j][k];
+                }
             }
-
-            if (img_in.M[i][j][1]<limiar){//vermelho
-                img_out.M[i][j][1]=255-img_in.M[i][j][1];
-            }
-
-            if (img_in.M[i][j][2]<limiar){//vermelho
-                img_out.M[i][j][2]=255-img_in.M[i][j][2];
-            }
-
         }
     }
 
     img_out.linhas = img_in.linhas;
     img_out.colunas = img_in.colunas;
 
-    salva_img("solariza.ppm", img_out);
+    escolha_nome(nome);
+    salva_img(nome, img_out);
 }
 
 void separa_canais (Img img_in, Img& img_r, Img& img_g, Img& img_b){
@@ -430,14 +473,15 @@ void separa_canais (Img img_in, Img& img_r, Img& img_g, Img& img_b){
     img_b.linhas= img_in.linhas;
 
     salva_img("red.ppm", img_r);
-    salva_img("green.ppm", img_g);
-    salva_img("blue.ppm", img_b);
+    salva_img("green.ppm",img_g);
+    salva_img("blue.ppm",img_b);
 
 }
 
 
 void inverte_verticalmente(Img img_in, Img& img_out){
     int i, j, k;
+    char nome[50];
 
     img_out.linhas= img_in.linhas;
     img_out.colunas = img_in.colunas;
@@ -450,11 +494,13 @@ void inverte_verticalmente(Img img_in, Img& img_out){
         }
     }
 
-    salva_img("Nova_imagem_invertida_verticalmente.ppm", img_out);
+    escolha_nome(nome);
+    salva_img(nome, img_out);
 }
 
 void inverte_horizontalmente(Img img_in, Img& img_out){
     int i, j, k;
+    char nome[50];
 
     img_out.linhas= img_in.linhas;
     img_out.colunas = img_in.colunas;
@@ -467,11 +513,13 @@ void inverte_horizontalmente(Img img_in, Img& img_out){
         }
     }
 
-    salva_img("Nova_imagem_invertida_horizontalmente.ppm", img_out);
+    escolha_nome(nome);
+    salva_img(nome, img_out);
 }
 
 void reflete_horizontalmente(Img img_in, Img& img_out){
     int i, j, k, meio_fim=img_in.colunas/2, meio_inicio=img_in.colunas/2;
+    char nome[50];
 
     img_out.linhas= img_in.linhas;
     img_out.colunas = img_in.colunas;
@@ -487,7 +535,8 @@ void reflete_horizontalmente(Img img_in, Img& img_out){
         meio_fim++;
     }
 
-    salva_img("Nova_imagem_refletida_horizontalmente1.ppm", img_out);
+    escolha_nome(nome);
+    salva_img(nome, img_out);
 }
 
 void reflete_verticalmente(Img img_in, Img& img_out){
@@ -513,6 +562,8 @@ void reflete_verticalmente(Img img_in, Img& img_out){
 
 void filtragem_por_erosao(Img img_in, Img& img_out){
     int i,j,k;
+    char nome[50];
+
     binariza(img_in,img_out, 127);
     img_out.linhas = img_in.linhas-1;
     img_out.colunas = img_in.colunas-1;
@@ -535,12 +586,15 @@ void filtragem_por_erosao(Img img_in, Img& img_out){
             }
         }
     }
-    salva_img ("filtragem_por_erosao.ppm", img_out);
+
+    escolha_nome(nome);
+    salva_img (nome, img_out);
 }
 
-void filtragem_por_dilatacao(Img img_in, Img& img_out)
-{
+void filtragem_por_dilatacao(Img img_in, Img& img_out){
     int i,j,k;
+    char nome[50];
+
     binariza(img_in,img_out,127);
     img_out.linhas = img_in.linhas-1;
     img_out.colunas = img_in.colunas-1;
@@ -572,12 +626,14 @@ int main(){
 
     setlocale(LC_ALL, "Portuguese"); // permite a utilização de acentos provenientes da lingua portuguesa
     Img img;
-    int x;
+    int x, limiar;
+    char nome[50];
 
-    //cout << endl<<"Informe o nome do arquivo que voce deseja abrir: " << endl;
+    cout <<"Informe o nome do arquivo que voce deseja abrir: " << endl;
+    cin >> nome;
 
-    abre_img("lena.ppm", img);
-    cout<<endl<<endl<<endl;
+    system("cls");
+    abre_img(nome,img);
 
     do{
 
@@ -598,7 +654,7 @@ int main(){
         cout<<" \t 12- Filtrar com Passa Altas \n ";
         cout<<" \t 13- Filtrar com Passa Baixas (tamanho fixo) \n ";
         cout<<" \t 14- Filtrar com Passa Baixas (tamanho variavel) \n ";
-        cout<<" \t 15- Inverter imagem (horizontalmente)= \n ";
+        cout<<" \t 15- Inverter imagem (horizontalmente)\n ";
         cout<<" \t 16- Inverter imagem (verticalmente) \n";
         cout<<" \t 17- Reduzir tamanho \n ";
         cout<<" \t 18- Refletir imagem (horizontalmente) \n ";
@@ -609,7 +665,7 @@ int main(){
         cout <<"\t 23- Solarizar \n";
         cout<<"\t 24- Sair \n ";
 
-        cout << "Qual opção você deseja escolher? ";
+        cout << endl << "Qual opção você deseja escolher? ";
         cin >> x;
 
         switch(x){
@@ -620,16 +676,21 @@ int main(){
 
             case 2:
                 Img pretoebranco;
-                binariza(img, pretoebranco,127);
+                escolha_limiar(limiar);
+
+                binariza(img, pretoebranco,limiar);
             break;
 
             case 3:
                 Img mascarapretoebranco;
-                binariza_com_mascara(img, mascarapretoebranco, 127);
+                escolha_limiar(limiar);
+
+                binariza_com_mascara(img, mascarapretoebranco, limiar);
             break;
 
             case 4:
                 Img canal;
+                escolha_limiar(limiar);
                 binariza_canal(img, canal, 127);
             break;
 
@@ -644,6 +705,13 @@ int main(){
             break;
 
             case 7:
+                Img cortada;
+                int li, ci, lf, cf;
+
+                cout << "Informe a linha inicial, linha final, coluna inicial e coluna final: ";
+                cin >> li >> lf >> ci >> cf;
+
+                corta_rgb(img, cortada, li, ci, lf, cf);
 
             break;
 
@@ -720,7 +788,9 @@ int main(){
 
             case 23:
                 Img solarizada;
-                solariza(img, solarizada, 55);
+
+                escolha_limiar(limiar);
+                solariza(img, solarizada,limiar);
             break;
 
             case 24:
@@ -728,7 +798,7 @@ int main(){
             break;
 
         }
-
+        system("cls");
     }while(x!=24);
 
     return 0;
