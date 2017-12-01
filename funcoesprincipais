@@ -627,6 +627,34 @@ void filtragem_por_dilatacao(Img img_in, Img& img_out){
 }
 
 
+void borra_imagem (Img img_in, Img_out)
+{
+    int i,k,j;
+    img_out.linhas = img_in.linhas;
+    img_out.colunas = img_in.colunas;
+
+    for(i=0; i<img_in.linhas; i++)
+    {
+        for(j=0; j<img_in.colunas; j++)
+        {
+            for(k=0; k<3; k++)
+            {
+                if(i=0 || j=0 || i=img_in.linhas-1 || j=img_out.colunas-1)
+                {
+                    img_out.M[i][j][k]= (img_in.M[i][j+1][k]+img_in.M[i+1][j][k]+img_in.M[i+1][j+1][k])/3;
+                }
+                else
+                {
+                    img_out.M[i][j][k]= (img_in.M[i-1][j-1][k]+ img_in.M[i-1][j][k]+img_in.M[i-1][j+1][k]+img_in.M[i][j-1][k]+img_in.M[i][j+1][k]+img_in.M[i+1][j-1][k]+img_in.M[i+1][j][k]+img_in.M[i+1][j+1][k])/8;
+                }
+            }
+        }
+    }
+    escolha_nome(nome);
+    salva_img (nome, img_out);
+}
+
+
 
 int main(){
 
