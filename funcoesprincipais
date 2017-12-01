@@ -3,6 +3,10 @@
 #include <locale.h> // permitir a acentuação
 #include <cstring>
 #include <cstdlib>
+#include <time.h>
+#include <dos.h>
+
+#define STRMAX 50
 
 using namespace std;
 
@@ -556,7 +560,6 @@ void reflete_verticalmente(Img img_in, Img& img_out){
         meio_fim++;
     }
 
-
     salva_img("Nova_imagem_refletida_verti.ppm", img_out);
 }
 
@@ -626,7 +629,7 @@ int main(){
 
     setlocale(LC_ALL, "Portuguese"); // permite a utilização de acentos provenientes da lingua portuguesa
     Img img;
-    int x, limiar;
+    int x, limiar,tempo;
     char nome[50];
 
     cout <<"Informe o nome do arquivo que voce deseja abrir: " << endl;
@@ -794,11 +797,24 @@ int main(){
             break;
 
             case 24:
+                system("cls");
                 cout << "xau xau!";
             break;
 
         }
-        system("cls");
+        if(x!=24){
+            system("cls");
+
+            tempo = clock();
+            cout <<"\n\n\n\n\n\n\t ~~~~Voltando para o Menu!~~~~";
+
+            while(clock() - tempo < 5000){
+
+            }
+
+            system("cls");
+
+        }
     }while(x!=24);
 
     return 0;
