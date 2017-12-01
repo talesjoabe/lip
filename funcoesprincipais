@@ -200,30 +200,25 @@ void aumenta_tamanho(Img img_in, Img& img_out){
     salva_img("imagem_aumentada.ppm", img_out);
 }
 
-Img mascara (Img img_in){
+Img mascara (Img& img_in){
     int i, j;
-    Img mascara;
 
-    mascara.linhas = img_in.linhas;
-    mascara.colunas = img_in.colunas;
-
-    for (i=0; i<mascara.linhas/2; i++){
-        for (j=0; j<mascara.colunas; j++){
-            mascara.M[i][j][0] = 255;
-            mascara.M[i][j][1] = 255;
-            mascara.M[i][j][2] = 255;
+    for (j=0; j<img_in.colunas/2; j++){
+        for (i=0; i<img_in.linhas; i++){
+            img_in.M[i][j][0] = 0;
+            img_in.M[i][j][1] = 0;
+            img_in.M[i][j][2] = 0;
         }
     }
 
-    for (i=mascara.linhas/2; i<mascara.linhas; i++){
-        for (j=0; j<mascara.colunas; j++){
-            mascara.M[i][j][0] = 0;
-            mascara.M[i][j][1] = 0;
-            mascara.M[i][j][2] = 0;
+    for (j=img_in.colunas/2; j<img_in.colunas; j++){
+        for (i=0; i<img_in.colunas; i++){
+            img_in.M[i][j][0] = 255;
+            img_in.M[i][j][1] = 255;
+            img_in.M[i][j][2] = 255;
         }
     }
 
-    return mascara;
 }
 
 void binariza(Img img_in, Img& img_out, int limiar){
@@ -240,7 +235,7 @@ void binariza(Img img_in, Img& img_out, int limiar){
                 img_out.M[i][j][1] = 0;
                 img_out.M[i][j][2] = 0;
             }
-            if (media >= limiar) {
+            else{
                 img_out.M[i][j][0] = 255;
                 img_out.M[i][j][1] = 255;
                 img_out.M[i][j][2] = 255;
@@ -252,21 +247,24 @@ void binariza(Img img_in, Img& img_out, int limiar){
 }
 
 void binariza_com_mascara(Img img_in, Img& img_out, int limiar){
-    int i, j;
+    int i, j, media;
+    Img aux= img_in;
 
     img_out.linhas = img_in.linhas;
     img_out.colunas = img_in.colunas;
 
+    mascara(aux);
+
     for(i=0; i< img_in.linhas; i++){
         for(j=0; j < img_in.colunas; j++){
-            if (mascara(img_in).M[i][j][0]==255 && mascara(img_in).M[i][j][1]==255 && mascara(img_in).M[i][j][2]==255){
-                int media = (img_in.M[i][j][0] + img_in.M[i][j][1] + img_in.M[i][j][2])/3;
+            if (aux.M[i][j][0]==255 && aux.M[i][j][1]==255 && aux.M[i][j][2]==255){
+                media = (img_in.M[i][j][0] + img_in.M[i][j][1] + img_in.M[i][j][2])/3;
                 if (media < limiar) {
                     img_out.M[i][j][0] = 0;
                     img_out.M[i][j][1] = 0;
                     img_out.M[i][j][2] = 0;
                 }
-                if (media >= limiar) {
+                else{
                     img_out.M[i][j][0] = 255;
                     img_out.M[i][j][1] = 255;
                     img_out.M[i][j][2] = 255;
@@ -280,7 +278,7 @@ void binariza_com_mascara(Img img_in, Img& img_out, int limiar){
         }
     }
 
-    salva_img("pretoebranco.ppm", img_out);
+    salva_img("pretoebrancocommascara.ppm", img_out);
 }
 
 void cinza(Img img_in, Img& img_out){
@@ -585,30 +583,30 @@ int main(){
 
         //Menu da função
 
-        cout<<endl<<"Selecione uma das opcoes:\n";
-        cout<<" \t 1 - Converter para niveis de cinza \n";
+        cout<<endl<<"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~MENU~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
+        cout<<" \t 1 - Aumentar tamanho \n";
         cout<<" \t 2 - Binarizar (preto e branco)\n ";
-        cout<<" \t 3 - Binarizar (por canal) \n ";
-        cout<<" \t 4 - Computar negativo \n ";
-        cout<<" \t 5 - Solarizar \n ";
-        cout<<" \t 6 - Separa canais \n";
-        cout<<" \t 7 - Rotacionar imagem (horario) \n ";
-        cout<<" \t 8 - Rotacionar imagem (anti-horario) \n ";
-        cout<<" \t 9 - Inverter imagem (horizontalmente) \n ";
-        cout<<" \t 10- Inverter imagem (verticalmente) \n ";
-        cout<<" \t 11- Refletir imagem (horizontalmente) \n ";
-        cout<<" \t 12- Refletir imagem (verticalmente) \n ";
-        cout<<" \t 13- Reduzir tamanho \n ";
-        cout<<" \t 14- Aumentar tamanho \n ";
-        cout<<" \t 15- Filtrar com Passa Baixas (tamanho fixo) \n";
-        cout<<" \t 16- Filtrar com erosao \n ";
-        cout<<" \t 17- Filtrar com dilatacao \n ";
-        cout<<" \t 18- Filtrar com Passa Altas \n ";
-        cout<<" \t 19- Equalizar Histograma \n ";
-        cout<<" \t 20- Filtrar com Mediana \n ";
-        cout<<" \t 21- Filtrar com Passa Baixas (tamanho variavel) \n";
-        cout<<" \t 22- Mascara \n ";
-        cout <<"\t 23- Cortar imagem \n";
+        cout<<" \t 3- Binarizar (preto e branco com máscara)\n ";
+        cout<<" \t 4 - Binarizar (por canal) \n ";
+        cout<<" \t 5 - Computar negativo \n ";
+        cout<<" \t 6 - Converter para niveis de cinza \n ";
+        cout<<" \t 7 - Cortar imagem \n";
+        cout<<" \t 8 - Equalizar Histograma \n ";
+        cout<<" \t 9 - Filtrar com dilatacao \n ";
+        cout<<" \t 10 - Filtrar com erosão \n ";
+        cout<<" \t 11- Filtrar com mediana \n ";
+        cout<<" \t 12- Filtrar com Passa Altas \n ";
+        cout<<" \t 13- Filtrar com Passa Baixas (tamanho fixo) \n ";
+        cout<<" \t 14- Filtrar com Passa Baixas (tamanho variavel) \n ";
+        cout<<" \t 15- Inverter imagem (horizontalmente)= \n ";
+        cout<<" \t 16- Inverter imagem (verticalmente) \n";
+        cout<<" \t 17- Reduzir tamanho \n ";
+        cout<<" \t 18- Refletir imagem (horizontalmente) \n ";
+        cout<<" \t 19- Refletir imagem (verticalmente) \n ";
+        cout<<" \t 20- Rotacionar imagem (anti-horario) \n ";
+        cout<<" \t 21- Rotacionar imagem (horario) \n";
+        cout<<" \t 22- Separa canais \n ";
+        cout <<"\t 23- Solarizar \n";
         cout<<"\t 24- Sair \n ";
 
         cout << "Qual opção você deseja escolher? ";
@@ -616,115 +614,117 @@ int main(){
 
         switch(x){
             case 1:
-                Img acinzentada;
-                cinza(img, acinzentada);
+                Img tamanhoaumentado;
+                aumenta_tamanho(img, tamanhoaumentado);
             break;
 
             case 2:
                 Img pretoebranco;
                 binariza(img, pretoebranco,127);
             break;
+
             case 3:
+                Img mascarapretoebranco;
+                binariza_com_mascara(img, mascarapretoebranco, 127);
+            break;
+
+            case 4:
                 Img canal;
                 binariza_canal(img, canal, 127);
             break;
 
-            case 4:
+            case 5:
                 Img ngt;
                 negativo(img, ngt);
             break;
 
-            case 5:
-                Img solarizada;
-                solariza(img, solarizada, 55);
-            break;
-
             case 6:
-                Img red, green, blue;
-                separa_canais(img, red, green, blue);
+                Img acinzentada;
+                cinza(img, acinzentada);
             break;
 
             case 7:
-                Img horario;
-                rotaciona(img, horario);
+
             break;
 
             case 8:
-                Img antihorario;
-                rotaciona_antihorario(img, antihorario);
-            break;
-
-            case 9:
-                Img invertidahorizontalmente;
-                inverte_horizontalmente(img, invertidahorizontalmente);
-            break;
-
-            case 10:
-                Img invertidaverticalmente;
-                inverte_verticalmente(img, invertidaverticalmente);
-            break;
-
-            case 11:
-                Img refletida_horizontalmente;
-                reflete_horizontalmente(img, refletida_horizontalmente);
-            break;
-
-            case 12:
-                Img refletida_verticalmente;
-                reflete_verticalmente(img, refletida_verticalmente);
-            break;
-
-            case 13:
-                Img tamanhoreduzido;
-                diminui_tamanho(img, tamanhoreduzido);
-            break;
-
-            case 14:
-                Img tamanhoaumentado;
-                aumenta_tamanho(img, tamanhoaumentado);
-            break;
-
-            case 15:
-
-            break;
-
-            case 16:
-                Img filtrada_erosao;
-                filtragem_por_erosao(img, filtrada_erosao);
-            break;
-
-            case 17:
-                Img filtrada_dilatacao;
-                filtragem_por_dilatacao(img, filtrada_dilatacao);
-            break;
-
-            case 18:
-
-            break;
-
-            case 19:
                 Img equalizada_histograma;
                 equaliza_histograma(img, equalizada_histograma);
             break;
 
-            case 20:
+            case 9:
+                Img filtrada_dilatacao;
+                filtragem_por_dilatacao(img, filtrada_dilatacao);
+            break;
 
+            case 10:
+                Img filtrada_erosao;
+                filtragem_por_erosao(img, filtrada_erosao);
+            break;
+
+            case 11:
+
+            break;
+
+            case 12:
+
+            break;
+
+            case 13:
+
+            break;
+
+            case 14:
+
+            break;
+
+            case 15:
+                Img invertidahorizontalmente;
+                inverte_horizontalmente(img, invertidahorizontalmente);
+            break;
+
+            case 16:
+                Img invertidaverticalmente;
+                inverte_verticalmente(img, invertidaverticalmente);
+            break;
+
+            case 17:
+                Img tamanhoreduzido;
+                diminui_tamanho(img, tamanhoreduzido);
+            break;
+
+            case 18:
+                Img refletida_horizontalmente;
+                reflete_horizontalmente(img, refletida_horizontalmente);
+            break;
+
+            case 19:
+                Img refletida_verticalmente;
+                reflete_verticalmente(img, refletida_verticalmente);
+            break;
+
+            case 20:
+                Img horario;
+                rotaciona(img, horario);
             break;
 
             case 21:
-
+                Img antihorario;
+                rotaciona_antihorario(img, antihorario);
             break;
 
             case 22:
-                mascara(img);
+                Img red, green, blue;
+                separa_canais(img, red, green, blue);
             break;
 
             case 23:
-
+                Img solarizada;
+                solariza(img, solarizada, 55);
             break;
 
             case 24:
-                cout << "xau xau";
+                cout << "xau xau!";
             break;
 
         }
