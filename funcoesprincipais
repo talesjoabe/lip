@@ -85,10 +85,23 @@ void corta_rgb(Img img_in, Img& img_out, int li, int ci, int lf, int cf){
 
     char nome[STRMAX];
 
-    int i, j, k;
+    int i, j, k, li2, lf2, ci2, cf2;
+
+    while(cf<ci || lf<li){
+        cout << "Esta função corta a imagem apenas da esquerda para direita e de cima para baixo!\n";
+        cout << "Informe um sentido válido: ";
+
+        cin >> li2 >> lf2 >> ci2 >> cf2;
+
+        li=li2;
+        lf=lf2;
+        ci= ci2;
+        cf= cf2;
+    }
 
     img_out.linhas= lf-li;
     img_out.colunas= cf-ci;
+
 
     for(i=li; i<=lf; i++){
         for(j=ci; j<=cf; j++){
@@ -97,9 +110,6 @@ void corta_rgb(Img img_in, Img& img_out, int li, int ci, int lf, int cf){
             }
         }
     }
-
-    escolha_nome(nome);
-    salva_img(nome, img_out);
 }
 
 void escolha_limiar(int& limiar){
@@ -132,10 +142,6 @@ void diminui_tamanho(Img img_in, Img& img_out){
         j=0;
         i++;
     }
-
-
-    escolha_nome(nome);
-    salva_img(nome, img_out);
 }
 
 void rotaciona(Img img_in, Img& img_out){
@@ -152,9 +158,6 @@ void rotaciona(Img img_in, Img& img_out){
             }
         }
     }
-
-    escolha_nome(nome);
-    salva_img(nome, img_out);
 }
 
 void rotaciona_antihorario(Img img_in, Img& img_out){
@@ -172,8 +175,6 @@ void rotaciona_antihorario(Img img_in, Img& img_out){
         }
     }
 
-    escolha_nome(nome);
-    salva_img(nome, img_out);
 }
 
 void aumenta_tamanho(Img img_in, Img& img_out){
@@ -223,10 +224,6 @@ void aumenta_tamanho(Img img_in, Img& img_out){
             }
         }
     }
-
-
-    escolha_nome(nome);
-    salva_img(nome, img_out);
 }
 
 Img mascara (Img& img_in){
@@ -272,9 +269,6 @@ void binariza(Img img_in, Img& img_out, int limiar){
             }
         }
     }
-
-    escolha_nome(nome);
-    salva_img(nome, img_out);
 }
 
 void binariza_com_mascara(Img img_in, Img& img_out, int limiar){
@@ -310,8 +304,6 @@ void binariza_com_mascara(Img img_in, Img& img_out, int limiar){
         }
     }
 
-    escolha_nome(nome);
-    salva_img(nome, img_out);
 }
 
 void cinza(Img img_in, Img& img_out){
@@ -330,12 +322,13 @@ void cinza(Img img_in, Img& img_out){
         }
     }
 
-    escolha_nome(nome);
-    salva_img(nome, img_out);
 }
 
 void negativo (Img img_in, Img& img_out){
     char nome[STRMAX];
+
+    img_out.linhas= img_in.linhas;
+    img_out.colunas= img_in.colunas;
 
     for (int i=0; i<img_in.linhas; i++){
         for (int j=0; j<img_in.colunas; j++){
@@ -344,9 +337,6 @@ void negativo (Img img_in, Img& img_out){
             img_out.M[i][j][2] = 255-img_in.M[i][j][2];
         }
     }
-
-    escolha_nome(nome);
-    salva_img(nome, img_out);
 }
 
 void binariza_canal(Img img_in, Img& img_out, int limiar){
@@ -383,8 +373,6 @@ void binariza_canal(Img img_in, Img& img_out, int limiar){
         }
     }
 
-    escolha_nome(nome);
-    salva_img(nome,img_out);
 }
 
 void equaliza_histograma(Img img_in, Img& img_out){
@@ -419,9 +407,6 @@ void equaliza_histograma(Img img_in, Img& img_out){
         }
     }
 
-    escolha_nome(nome);
-    salva_img(nome, img_out);
-
 }
 
 void solariza (Img img_in, Img& img_out, int limiar){
@@ -444,9 +429,6 @@ void solariza (Img img_in, Img& img_out, int limiar){
 
     img_out.linhas = img_in.linhas;
     img_out.colunas = img_in.colunas;
-
-    escolha_nome(nome);
-    salva_img(nome, img_out);
 }
 
 void separa_canais (Img img_in, Img& img_r, Img& img_g, Img& img_b){
@@ -479,10 +461,6 @@ void separa_canais (Img img_in, Img& img_r, Img& img_g, Img& img_b){
     img_b.colunas= img_in.colunas;
     img_b.linhas= img_in.linhas;
 
-    salva_img("red.ppm", img_r);
-    salva_img("green.ppm",img_g);
-    salva_img("blue.ppm",img_b);
-
 }
 
 
@@ -500,9 +478,6 @@ void inverte_verticalmente(Img img_in, Img& img_out){
             }
         }
     }
-
-    escolha_nome(nome);
-    salva_img(nome, img_out);
 }
 
 void inverte_horizontalmente(Img img_in, Img& img_out){
@@ -519,9 +494,6 @@ void inverte_horizontalmente(Img img_in, Img& img_out){
             }
         }
     }
-
-    escolha_nome(nome);
-    salva_img(nome, img_out);
 }
 
 void reflete_horizontalmente(Img img_in, Img& img_out){
@@ -541,9 +513,6 @@ void reflete_horizontalmente(Img img_in, Img& img_out){
         meio_inicio--;
         meio_fim++;
     }
-
-    escolha_nome(nome);
-    salva_img(nome, img_out);
 }
 
 void reflete_verticalmente(Img img_in, Img& img_out){
@@ -562,17 +531,14 @@ void reflete_verticalmente(Img img_in, Img& img_out){
         meio_inicio--;
         meio_fim++;
     }
-
-    salva_img("Nova_imagem_refletida_verti.ppm", img_out);
 }
 
 void filtragem_por_erosao(Img img_in, Img& img_out){
     int i,j,k;
     char nome[STRMAX];
 
-    binariza(img_in,img_out, 127);
-    img_out.linhas = img_in.linhas-1;
-    img_out.colunas = img_in.colunas-1;
+    img_out.linhas = img_in.linhas;
+    img_out.colunas = img_in.colunas;
 
     for(i=0; i<img_out.linhas; i++)
     {
@@ -580,7 +546,7 @@ void filtragem_por_erosao(Img img_in, Img& img_out){
         {
             for(k=0; k<3; k++)
             {
-                if(img_in.M[i][j][k]==1 && img_in.M[i+1][j][k]==1 && img_in.M[i][j+1][k]==1 && img_in.M[i+1][j+1][k]==1)
+                if(img_in.M[i][j][k]==255 && img_in.M[i+1][j][k]==255 && img_in.M[i][j+1][k]==255 && img_in.M[i+1][j+1][k]==255)
                 {
                     img_out.M[i][j][k]= 255;
                 }
@@ -592,9 +558,6 @@ void filtragem_por_erosao(Img img_in, Img& img_out){
             }
         }
     }
-
-    escolha_nome(nome);
-    salva_img (nome, img_out);
 }
 
 void filtragem_por_dilatacao(Img img_in, Img& img_out){
@@ -602,8 +565,8 @@ void filtragem_por_dilatacao(Img img_in, Img& img_out){
     char nome[STRMAX];
 
     binariza(img_in,img_out,127);
-    img_out.linhas = img_in.linhas-1;
-    img_out.colunas = img_in.colunas-1;
+    img_out.linhas = img_in.linhas;
+    img_out.colunas = img_in.colunas;
 
     for(i=0; i<img_out.linhas; i++)
     {
@@ -611,7 +574,7 @@ void filtragem_por_dilatacao(Img img_in, Img& img_out){
         {
             for(k=0; k<3; k++)
             {
-                if(img_in.M[i][j][k]==1 || img_in.M[i+1][j][k]==1 || img_in.M[i][j+1][k]==1 || img_in.M[i+1][j+1][k]==1)
+                if(img_in.M[i][j][k]==255 || img_in.M[i+1][j][k]==255 || img_in.M[i][j+1][k]==255 || img_in.M[i+1][j+1][k]==255)
                 {
                     img_out.M[i][j][k]= 255;
                 }
@@ -623,13 +586,13 @@ void filtragem_por_dilatacao(Img img_in, Img& img_out){
             }
         }
     }
-    salva_img("filtragem_por_dilatacao.ppm", img_out);
 }
 
-
-void borra_imagem (Img img_in, Img_out)
+void borra_imagem (Img img_in, Img& img_out)
 {
     int i,k,j;
+    char nome[STRMAX];
+
     img_out.linhas = img_in.linhas;
     img_out.colunas = img_in.colunas;
 
@@ -639,22 +602,73 @@ void borra_imagem (Img img_in, Img_out)
         {
             for(k=0; k<3; k++)
             {
-                if(i=0 || j=0 || i=img_in.linhas-1 || j=img_out.colunas-1)
+                if(i==0 || j==0 || i==img_in.linhas-1 || j==img_out.colunas-1)
                 {
                     img_out.M[i][j][k]= (img_in.M[i][j+1][k]+img_in.M[i+1][j][k]+img_in.M[i+1][j+1][k])/3;
                 }
                 else
                 {
-                    img_out.M[i][j][k]= (img_in.M[i-1][j-1][k]+ img_in.M[i-1][j][k]+img_in.M[i-1][j+1][k]+img_in.M[i][j-1][k]+img_in.M[i][j+1][k]+img_in.M[i+1][j-1][k]+img_in.M[i+1][j][k]+img_in.M[i+1][j+1][k])/8;
+                    img_out.M[i][j][k]= (img_in.M[i][j][k]+img_in.M[i-1][j-1][k]+ img_in.M[i-1][j][k]+img_in.M[i-1][j+1][k]+img_in.M[i][j-1][k]+img_in.M[i][j+1][k]+img_in.M[i+1][j-1][k]+img_in.M[i+1][j][k]+img_in.M[i+1][j+1][k])/9;
                 }
             }
         }
     }
-    escolha_nome(nome);
-    salva_img (nome, img_out);
 }
 
+void remove_ruido_mediana(Img img_in, Img& img_out){
+    int i, j, k, aux=0;
+    int v[9]={}, vm[3]={};
 
+    img_out.linhas = img_in.linhas;
+    img_out.colunas= img_in.colunas;
+
+    for(i=0; i<img_out.linhas; i++){
+        for(j=0; j<img_out.colunas; i++){
+            for(k=0; k<3; k++){
+                if(i==0 || j==0 || i==img_in.linhas-1 || j==img_out.colunas-1)
+                {
+                    vm[0]=img_in.M[i][j+1][k];
+                    vm[1]=img_in.M[i+1][j][k];
+                    vm[2]=img_in.M[i+1][j+1][k];
+
+                    for(int l=0; l<3; l++){
+                        if(l!=0){
+                            if(vm[l]<vm[l-1]){
+                                aux=vm[l-1];
+                                vm[l-1]=vm[l];
+                                vm[l]=aux;
+                            }
+                        }
+                    }
+                    img_out.M[i][j][k]=v[1];
+                }
+                else
+                {
+                    v[0]=img_in.M[i-1][j-1][k];
+                    v[1]= img_in.M[i-1][j][k];
+                    v[2]=img_in.M[i-1][j+1][k];
+                    v[3]=img_in.M[i][j-1][k];
+                    v[4]=img_in.M[i][j+1][k];
+                    v[5]=img_in.M[i+1][j-1][k];
+                    v[6]=img_in.M[i+1][j][k];
+                    v[7]=img_in.M[i+1][j+1][k];
+                    v[8]= img_in.M[i][j][k];
+
+                    for(int l=0; l<9; l++){
+                        if(l!=0){
+                            if(v[l]<v[l-1]){
+                                aux=v[l];
+                                v[l-1]=v[l];
+                                v[l]=aux;
+                            }
+                        }
+                    }
+                    img_out.M[i][j][k]=v[4];
+                }
+            }
+        }
+    }
+}
 
 int main(){
 
@@ -706,36 +720,46 @@ int main(){
             case 1:
                 Img tamanhoaumentado;
                 aumenta_tamanho(img, tamanhoaumentado);
+                escolha_nome(nome);
+                salva_img(nome, tamanhoaumentado);
             break;
 
             case 2:
                 Img pretoebranco;
                 escolha_limiar(limiar);
-
                 binariza(img, pretoebranco,limiar);
+                escolha_nome(nome);
+                salva_img(nome, pretoebranco);
             break;
 
             case 3:
                 Img mascarapretoebranco;
                 escolha_limiar(limiar);
-
                 binariza_com_mascara(img, mascarapretoebranco, limiar);
+                escolha_nome(nome);
+                salva_img(nome, mascarapretoebranco);
             break;
 
             case 4:
                 Img canal;
                 escolha_limiar(limiar);
                 binariza_canal(img, canal, 127);
+                escolha_nome(nome);
+                salva_img(nome, canal);
             break;
 
             case 5:
                 Img ngt;
                 negativo(img, ngt);
+                escolha_nome(nome);
+                salva_img(nome, ngt);
             break;
 
             case 6:
                 Img acinzentada;
                 cinza(img, acinzentada);
+                escolha_nome(nome);
+                salva_img(nome, acinzentada);
             break;
 
             case 7:
@@ -746,25 +770,37 @@ int main(){
                 cin >> li >> lf >> ci >> cf;
 
                 corta_rgb(img, cortada, li, ci, lf, cf);
+                escolha_nome(nome);
+                salva_img(nome, cortada);
 
             break;
 
             case 8:
                 Img equalizada_histograma;
                 equaliza_histograma(img, equalizada_histograma);
+                escolha_nome(nome);
+                salva_img(nome, equalizada_histograma);
             break;
 
             case 9:
                 Img filtrada_dilatacao;
                 filtragem_por_dilatacao(img, filtrada_dilatacao);
+                escolha_nome(nome);
+                salva_img(nome, filtrada_dilatacao);
             break;
 
             case 10:
                 Img filtrada_erosao;
                 filtragem_por_erosao(img, filtrada_erosao);
+                escolha_nome(nome);
+                salva_img(nome, filtrada_erosao);
             break;
 
             case 11:
+                Img mediana;
+                remove_ruido_mediana(img, mediana);
+                escolha_nome(nome);
+                salva_img(nome,mediana);
 
             break;
 
@@ -773,7 +809,10 @@ int main(){
             break;
 
             case 13:
-
+                Img borrada;
+                borra_imagem(img, borrada);
+                escolha_nome(nome);
+                salva_img(nome, borrada);
             break;
 
             case 14:
@@ -783,41 +822,56 @@ int main(){
             case 15:
                 Img invertidahorizontalmente;
                 inverte_horizontalmente(img, invertidahorizontalmente);
+                escolha_nome(nome);
+                salva_img(nome, invertidahorizontalmente);
             break;
 
             case 16:
                 Img invertidaverticalmente;
                 inverte_verticalmente(img, invertidaverticalmente);
+                escolha_nome(nome);
+                salva_img(nome, invertidaverticalmente);
             break;
 
             case 17:
                 Img tamanhoreduzido;
                 diminui_tamanho(img, tamanhoreduzido);
+                escolha_nome(nome);
+                salva_img(nome, tamanhoreduzido);
             break;
 
             case 18:
                 Img refletida_horizontalmente;
                 reflete_horizontalmente(img, refletida_horizontalmente);
+                escolha_nome(nome);
+                salva_img(nome, refletida_horizontalmente);
             break;
 
             case 19:
                 Img refletida_verticalmente;
                 reflete_verticalmente(img, refletida_verticalmente);
+                escolha_nome(nome);
+                salva_img(nome, refletida_verticalmente);
             break;
 
             case 20:
                 Img horario;
                 rotaciona(img, horario);
+                escolha_nome(nome);
+                salva_img(nome, horario);
             break;
 
             case 21:
                 Img antihorario;
                 rotaciona_antihorario(img, antihorario);
+                escolha_nome(nome);
+                salva_img(nome, antihorario);
             break;
 
             case 22:
                 Img red, green, blue;
                 separa_canais(img, red, green, blue);
+                //ajeitar
             break;
 
             case 23:
@@ -825,6 +879,8 @@ int main(){
 
                 escolha_limiar(limiar);
                 solariza(img, solarizada,limiar);
+                escolha_nome(nome);
+                salva_img(nome, solarizada);
             break;
 
             case 24:
