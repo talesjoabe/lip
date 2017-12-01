@@ -83,7 +83,7 @@ void escolha_nome(char nome[]){
 
 void corta_rgb(Img img_in, Img& img_out, int li, int ci, int lf, int cf){
 
-    char nome[50];
+    char nome[STRMAX];
 
     int i, j, k;
 
@@ -111,7 +111,7 @@ void escolha_limiar(int& limiar){
 
 void diminui_tamanho(Img img_in, Img& img_out){
     int i=0, j=0, k, linhas, colunas;
-    char nome[50];
+    char nome[STRMAX];
 
     img_out.linhas= img_in.linhas/2;
     img_out.colunas= img_in.colunas/2;
@@ -140,7 +140,7 @@ void diminui_tamanho(Img img_in, Img& img_out){
 
 void rotaciona(Img img_in, Img& img_out){
     int i, j, k;
-    char nome[50];
+    char nome[STRMAX];
 
     img_out.linhas= img_in.colunas;
     img_out.colunas = img_in.linhas;
@@ -159,7 +159,7 @@ void rotaciona(Img img_in, Img& img_out){
 
 void rotaciona_antihorario(Img img_in, Img& img_out){
     int i, j, k;
-    char nome[50];
+    char nome[STRMAX];
 
     img_out.linhas= img_in.colunas;
     img_out.colunas = img_in.linhas;
@@ -178,7 +178,7 @@ void rotaciona_antihorario(Img img_in, Img& img_out){
 
 void aumenta_tamanho(Img img_in, Img& img_out){
     int i1,j1,i2,j2,k;
-    char nome[50];
+    char nome[STRMAX];
 
     img_out.colunas=2*img_in.colunas-1;
     img_out.linhas=2*img_in.linhas-1;
@@ -200,7 +200,7 @@ void aumenta_tamanho(Img img_in, Img& img_out){
     for(j2=1;j2<img_out.colunas;j2+=2){
         for(k=0;k<3;k++){
             img_out.M[0][j2][k]=(img_out.M[0][j2-1][k]+img_out.M[0][j2+1][k])/2;
-            img_out.M[img_out.linhas-1][j2][k]=(img_out.M[img_out.linhas-1][j2-1][k]+img_out.M[img_out.linhas-1][j2-1][k])/2;
+            img_out.M[img_out.linhas-1][j2][k]=(img_out.M[img_out.linhas-1][j2-1][k]+img_out.M[img_out.linhas-1][j2+1][k])/2;
         }
     }
     //segunda etapa
@@ -213,8 +213,8 @@ void aumenta_tamanho(Img img_in, Img& img_out){
         }
     }
     //terceira etapa
-    for(i2=1;i2<img_out.linhas;i2+=2){
-        for(j2=1;j2<img_out.colunas;j2+=2){
+    for(i2=1;i2<img_out.linhas;i2++){
+        for(j2=1;j2<img_out.colunas;j2++){
             if((i2%2==0 && j2%2!=0)|| (i2%2!=0 && j2%2==0)){
                 for(k=0;k<3;k++){
                     img_out.M[i2][j2][k]=img_out.M[i2-1][j2][k]+img_out.M[i2+1][j2][k]+img_out.M[i2][j2-1][k]+img_out.M[i2][j2+1][k];
@@ -252,7 +252,7 @@ Img mascara (Img& img_in){
 
 void binariza(Img img_in, Img& img_out, int limiar){
     int i, j;
-    char nome[50];
+    char nome[STRMAX];
 
     img_out.linhas = img_in.linhas;
     img_out.colunas = img_in.colunas;
@@ -279,7 +279,7 @@ void binariza(Img img_in, Img& img_out, int limiar){
 
 void binariza_com_mascara(Img img_in, Img& img_out, int limiar){
     int i, j, media;
-    char nome[50];
+    char nome[STRMAX];
     Img aux= img_in;
 
     img_out.linhas = img_in.linhas;
@@ -316,7 +316,7 @@ void binariza_com_mascara(Img img_in, Img& img_out, int limiar){
 
 void cinza(Img img_in, Img& img_out){
     int i, j;
-    char nome[50];
+    char nome[STRMAX];
 
     img_out.linhas = img_in.linhas;
     img_out.colunas = img_in.colunas;
@@ -335,7 +335,7 @@ void cinza(Img img_in, Img& img_out){
 }
 
 void negativo (Img img_in, Img& img_out){
-    char nome[50];
+    char nome[STRMAX];
 
     for (int i=0; i<img_in.linhas; i++){
         for (int j=0; j<img_in.colunas; j++){
@@ -351,7 +351,7 @@ void negativo (Img img_in, Img& img_out){
 
 void binariza_canal(Img img_in, Img& img_out, int limiar){
     int i, j;
-    char nome[50];
+    char nome[STRMAX];
 
     img_out.linhas = img_in.linhas;
     img_out.colunas = img_in.colunas;
@@ -388,13 +388,14 @@ void binariza_canal(Img img_in, Img& img_out, int limiar){
 }
 
 void equaliza_histograma(Img img_in, Img& img_out){
-    char nome[50];
+    char nome[STRMAX];
 
     img_out.linhas=img_in.linhas;
     img_out.colunas=img_in.colunas;
 
     int h[3][256]={};
     int pixel,s;
+
     for(int i=0;i<img_in.linhas;i++){
         for(int j=0;j<img_in.colunas;j++){
             for(int k=0;k<3;k++){
@@ -403,6 +404,7 @@ void equaliza_histograma(Img img_in, Img& img_out){
             }
         }
     }
+
     for(int i=0;i<img_in.linhas;i++){
         for(int j=0;j<img_in.colunas;j++){
             for(int k=0;k<3;k++){
@@ -410,7 +412,8 @@ void equaliza_histograma(Img img_in, Img& img_out){
                 for(int l=0;l<=img_in.M[i][j][k];l++){
                     s=s+h[k][l];
                 }
-                s=s*(255/(img_in.linhas*img_in.colunas));
+
+                s=(s*255)/(img_in.linhas*img_in.colunas);
                 img_out.M[i][j][k]=s;
             }
         }
@@ -423,7 +426,7 @@ void equaliza_histograma(Img img_in, Img& img_out){
 
 void solariza (Img img_in, Img& img_out, int limiar){
     int i, j,k;
-    char nome[50];
+    char nome[STRMAX];
 
     for(i=0; i<img_in.linhas; i++){
         for(j=0; j<img_in.colunas; j++){
@@ -485,7 +488,7 @@ void separa_canais (Img img_in, Img& img_r, Img& img_g, Img& img_b){
 
 void inverte_verticalmente(Img img_in, Img& img_out){
     int i, j, k;
-    char nome[50];
+    char nome[STRMAX];
 
     img_out.linhas= img_in.linhas;
     img_out.colunas = img_in.colunas;
@@ -504,7 +507,7 @@ void inverte_verticalmente(Img img_in, Img& img_out){
 
 void inverte_horizontalmente(Img img_in, Img& img_out){
     int i, j, k;
-    char nome[50];
+    char nome[STRMAX];
 
     img_out.linhas= img_in.linhas;
     img_out.colunas = img_in.colunas;
@@ -523,7 +526,7 @@ void inverte_horizontalmente(Img img_in, Img& img_out){
 
 void reflete_horizontalmente(Img img_in, Img& img_out){
     int i, j, k, meio_fim=img_in.colunas/2, meio_inicio=img_in.colunas/2;
-    char nome[50];
+    char nome[STRMAX];
 
     img_out.linhas= img_in.linhas;
     img_out.colunas = img_in.colunas;
@@ -565,7 +568,7 @@ void reflete_verticalmente(Img img_in, Img& img_out){
 
 void filtragem_por_erosao(Img img_in, Img& img_out){
     int i,j,k;
-    char nome[50];
+    char nome[STRMAX];
 
     binariza(img_in,img_out, 127);
     img_out.linhas = img_in.linhas-1;
@@ -596,7 +599,7 @@ void filtragem_por_erosao(Img img_in, Img& img_out){
 
 void filtragem_por_dilatacao(Img img_in, Img& img_out){
     int i,j,k;
-    char nome[50];
+    char nome[STRMAX];
 
     binariza(img_in,img_out,127);
     img_out.linhas = img_in.linhas-1;
@@ -630,7 +633,7 @@ int main(){
     setlocale(LC_ALL, "Portuguese"); // permite a utilização de acentos provenientes da lingua portuguesa
     Img img;
     int x, limiar,tempo;
-    char nome[50];
+    char nome[STRMAX];
 
     cout <<"Informe o nome do arquivo que voce deseja abrir: " << endl;
     cin >> nome;
