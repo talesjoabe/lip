@@ -819,7 +819,6 @@ int main(){
         cout<<" \t 12- Filtrar com Passa Altas (derivada horizontal) \n ";
         cout<<" \t 13- Filtrar com Passa Altas (derivada vertical) \n ";
         cout<<" \t 14- Filtrar com Passa Baixas (tamanho fixo) \n ";
-        //cout<<" \t 15- Filtrar com Passa Baixas (tamanho variavel) \n ";
         cout<<" \t 15- Inverter imagem (horizontalmente)\n ";
         cout<<" \t 16- Inverter imagem (verticalmente) \n";
         cout<<" \t 17- Reduzir tamanho \n ";
@@ -996,8 +995,20 @@ int main(){
 
             case 22:
                 Img red, green, blue;
+                char r[STRMAX], g[STRMAX], b[STRMAX];
                 separa_canais(img, red, green, blue);
-                //ajeitar
+                
+                cout << "Escolha um nome para a imagem vermelho: ";
+                cin >> r;
+                cout << "Escolha um nome para a imagem azul: ";
+                cin >> b;
+                cout << "Escolha um nome para a imagem verde: ";
+                cin >> g;
+                
+                salva_img(r, red);
+                salva_img(b, blue);
+                salva_img(g, green);
+                
             break;
 
             case 23:
