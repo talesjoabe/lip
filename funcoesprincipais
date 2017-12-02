@@ -707,8 +707,8 @@ int main(){
         cout<<" \t 17- Reduzir tamanho \n ";
         cout<<" \t 18- Refletir imagem (horizontalmente) \n ";
         cout<<" \t 19- Refletir imagem (verticalmente) \n ";
-        cout<<" \t 20- Rotacionar imagem (anti-horario) \n ";
-        cout<<" \t 21- Rotacionar imagem (horario) \n";
+        cout<<" \t 20- Rotacionar imagem (horario) \n ";
+        cout<<" \t 21- Rotacionar imagem (anti-horario) \n";
         cout<<" \t 22- Separa canais \n ";
         cout <<"\t 23- Solarizar \n";
         cout<<"\t 24- Sair \n ";
