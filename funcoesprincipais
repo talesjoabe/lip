@@ -4,7 +4,6 @@
 #include <cstring>
 #include <cstdlib>
 #include <time.h>
-#include <dos.h>
 
 #define STRMAX 50
 
@@ -623,7 +622,7 @@ void remove_ruido_mediana(Img img_in, Img& img_out){
     img_out.colunas= img_in.colunas;
 
     for(i=0; i<img_out.linhas; i++){
-        for(j=0; j<img_out.colunas; i++){
+        for(j=0; j<img_out.colunas; j++){
             for(k=0; k<3; k++){
                 if(i==0 || j==0 || i==img_in.linhas-1 || j==img_out.colunas-1)
                 {
@@ -654,11 +653,11 @@ void remove_ruido_mediana(Img img_in, Img& img_out){
                     v[7]=img_in.M[i+1][j+1][k];
                     v[8]= img_in.M[i][j][k];
 
-                    for(int l=0; l<9; l++){
-                        if(l!=0){
-                            if(v[l]<v[l-1]){
-                                aux=v[l];
-                                v[l-1]=v[l];
+                    for(int m=0; m<9; m++){
+                        for(int l=0; l<9; l++){
+                            if(v[m]>v[l]){
+                                aux=v[m];
+                                v[m]=v[l];
                                 v[l]=aux;
                             }
                         }
@@ -707,8 +706,8 @@ int main(){
         cout<<" \t 17- Reduzir tamanho \n ";
         cout<<" \t 18- Refletir imagem (horizontalmente) \n ";
         cout<<" \t 19- Refletir imagem (verticalmente) \n ";
-        cout<<" \t 20- Rotacionar imagem (horario) \n ";
-        cout<<" \t 21- Rotacionar imagem (anti-horario) \n";
+        cout<<" \t 20- Rotacionar imagem (anti-horario) \n ";
+        cout<<" \t 21- Rotacionar imagem (horario) \n";
         cout<<" \t 22- Separa canais \n ";
         cout <<"\t 23- Solarizar \n";
         cout<<"\t 24- Sair \n ";
@@ -855,17 +854,17 @@ int main(){
             break;
 
             case 20:
-                Img horario;
-                rotaciona(img, horario);
-                escolha_nome(nome);
-                salva_img(nome, horario);
-            break;
-
-            case 21:
                 Img antihorario;
                 rotaciona_antihorario(img, antihorario);
                 escolha_nome(nome);
                 salva_img(nome, antihorario);
+            break;
+
+            case 21:
+                Img horario;
+                rotaciona(img, horario);
+                escolha_nome(nome);
+                salva_img(nome, horario);
             break;
 
             case 22:
@@ -885,7 +884,7 @@ int main(){
 
             case 24:
                 system("cls");
-                cout << "xau xau!";
+                cout << "Já acabou, período?";
             break;
 
         }
