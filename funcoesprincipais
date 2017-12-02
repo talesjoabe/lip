@@ -669,6 +669,72 @@ void remove_ruido_mediana(Img img_in, Img& img_out){
     }
 }
 
+void computa_derivada_horizontal(Img img_in, Img& img_out)
+{
+    img_out.linhas = img_in.linhas;
+    img_out.colunas =img_in.colunas;
+
+    for(int i=0; i<img_in.linhas; i++)
+    {
+        for(int j=0; j<img_in.colunas; j++)
+        {
+            for(int k=0; k<3; k++)
+            {
+
+                 if(i==0 || j==0 || i==img_in.linhas-1 || j==img_out.colunas-1){
+                    img_out.M[i][j][k]=((img_in.M[i][j+1][k])/(2))+((img_in.M[i+1][j+1][k])/(4));
+                
+                }else{
+                img_out.M[i][j][k]=((img_in.M[i-1][j-1][k])/(-4))+((img_in.M[i-1][j+1][k])/(4))+((img_in.M[i][j-1][k])/(-2))+((img_in.M[i][j+1][k])/(2))+((img_in.M[i+1][j-1][k])/(-4))+((img_in.M[i+1][j+1][k])/(4));
+                
+                }
+                
+                if(img_out.M[i][j][k]<0)
+                {
+
+                    img_out.M[i][j][k]*=(-1);
+                }
+
+            }
+        }
+    }
+
+
+}
+
+void computa_derivada_vertical(Img img_in, Img& img_out)
+{
+    img_out.linhas = img_in.linhas;
+    img_out.colunas =img_in.colunas;
+
+    for(int i=0; i<img_in.linhas; i++)
+    {
+        for(int j=0; j<img_in.colunas; j++)
+        {
+            for(int k=0; k<3; k++)
+            {
+
+                if(i==0 || j==0 || i==img_in.linhas-1 || j==img_out.colunas-1){
+                    img_out.M[i][j][k]=((img_in.M[i+1][j][k])/(2))+((img_in.M[i+1][j-+1][k])/(4));
+                
+                }else{
+                   img_out.M[i][j][k]=((img_in.M[i-1][j-1][k])/(-4))+((img_in.M[i-1][j+1][k])/(-4))+((img_in.M[i-1][j][k])/(-2))+((img_in.M[i+1][j][k])/(2))+((img_in.M[i+1][j-1][k])/(4))+((img_in.M[i+1][j+1][k])/(4));
+                }
+
+                if(img_out.M[i][j][k]<0)
+                {
+
+                    img_out.M[i][j][k]*=(-1);
+                }
+
+            }
+        }
+    }
+
+
+}
+
+
 int main(){
 
     setlocale(LC_ALL, "Portuguese"); // permite a utilização de acentos provenientes da lingua portuguesa
