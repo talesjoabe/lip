@@ -683,12 +683,12 @@ void computa_derivada_horizontal(Img img_in, Img& img_out)
 
                  if(i==0 || j==0 || i==img_in.linhas-1 || j==img_out.colunas-1){
                     img_out.M[i][j][k]=((img_in.M[i][j+1][k])/(2))+((img_in.M[i+1][j+1][k])/(4));
-                
+
                 }else{
                 img_out.M[i][j][k]=((img_in.M[i-1][j-1][k])/(-4))+((img_in.M[i-1][j+1][k])/(4))+((img_in.M[i][j-1][k])/(-2))+((img_in.M[i][j+1][k])/(2))+((img_in.M[i+1][j-1][k])/(-4))+((img_in.M[i+1][j+1][k])/(4));
-                
+
                 }
-                
+
                 if(img_out.M[i][j][k]<0)
                 {
 
@@ -716,7 +716,7 @@ void computa_derivada_vertical(Img img_in, Img& img_out)
 
                 if(i==0 || j==0 || i==img_in.linhas-1 || j==img_out.colunas-1){
                     img_out.M[i][j][k]=((img_in.M[i+1][j][k])/(2))+((img_in.M[i+1][j-+1][k])/(4));
-                
+
                 }else{
                    img_out.M[i][j][k]=((img_in.M[i-1][j-1][k])/(-4))+((img_in.M[i-1][j+1][k])/(-4))+((img_in.M[i-1][j][k])/(-2))+((img_in.M[i+1][j][k])/(2))+((img_in.M[i+1][j-1][k])/(4))+((img_in.M[i+1][j+1][k])/(4));
                 }
@@ -764,9 +764,10 @@ int main(){
         cout<<" \t 9 - Filtrar com dilatacao \n ";
         cout<<" \t 10 - Filtrar com erosão \n ";
         cout<<" \t 11- Filtrar com mediana \n ";
-        cout<<" \t 12- Filtrar com Passa Altas \n ";
-        cout<<" \t 13- Filtrar com Passa Baixas (tamanho fixo) \n ";
-        cout<<" \t 14- Filtrar com Passa Baixas (tamanho variavel) \n ";
+        cout<<" \t 12- Filtrar com Passa Altas (derivada horizontal) \n ";
+        cout<<" \t 13- Filtrar com Passa Altas (derivada vertical) \n ";
+        cout<<" \t 14- Filtrar com Passa Baixas (tamanho fixo) \n ";
+        //cout<<" \t 15- Filtrar com Passa Baixas (tamanho variavel) \n ";
         cout<<" \t 15- Inverter imagem (horizontalmente)\n ";
         cout<<" \t 16- Inverter imagem (verticalmente) \n";
         cout<<" \t 17- Reduzir tamanho \n ";
@@ -870,18 +871,26 @@ int main(){
             break;
 
             case 12:
+                Img derivadahorizontal;
+                computa_derivada_horizontal(img, derivadahorizontal);
+                escolha_nome(nome);
+                salva_img(nome, derivadahorizontal);
 
             break;
 
             case 13:
+                Img derivadavertical;
+                computa_derivada_vertical(img, derivadavertical);
+                escolha_nome(nome);
+                salva_img(nome, derivadavertical);
+
+            break;
+
+            case 14:
                 Img borrada;
                 borra_imagem(img, borrada);
                 escolha_nome(nome);
                 salva_img(nome, borrada);
-            break;
-
-            case 14:
-
             break;
 
             case 15:
