@@ -18,20 +18,47 @@ struct Img{
 void abre_img(char nome[], Img& img){
     fstream arq;
 
-    int  pixels, k=0;
-    char tipo[3]; // declara uma variavel char para armazenar o tipo da imagem
+    int  pixels, k=0, tamanho;
+    char tipo[3], nomeaux[STRMAX]; // declara uma variavel char para armazenar o tipo da imagem
+
+    while(true){
+
+        tamanho=strlen(nome);
+
+        if(nome[tamanho-4]!= '.' || nome[tamanho-3]!='p' || nome[tamanho-2]!='p' || nome[tamanho-1]!='m'){
+            cout << endl << "Só é possível abrir a imagem no formato .ppm\n";
+            cout <<"Informe o nome do arquivo que você deseja abrir: " << endl;
+            cin >> nomeaux;
+            strcpy(nome, nomeaux);
+        }
+
+        else{
+            break;
+        }
+    }
 
     arq.open(nome);
 
     if(arq.is_open()){
         arq.getline(tipo, 3);
-        if(strcmp("P3",tipo)!=0){
-            cout<<"ERRO\n";
-            exit(0);
-        }
         arq >> img.colunas;
         arq >> img.linhas;
         arq>> pixels;
+
+        if(strcmp("P3",tipo)!=0){
+            cout<< endl << "Não é possível abrir esta imagem. Insira alguma outra no formato ppm!\n";
+            exit(0);
+        }
+
+        else if(img.colunas>512 || img.colunas <1 || img.linhas>512 || img.linhas <1){
+            cout << endl << "Tamanho da imagem inválido!\n";
+            exit(0);
+        }
+
+        else if(pixels>255 || pixels<255){
+            cout << endl << "Valor máximo admissível por cada pixel inválido!\n";
+            exit(0);
+        }
 
         int i, j;
 
@@ -46,10 +73,11 @@ void abre_img(char nome[], Img& img){
     }
 
     else{
-        cout << nome << " não foi localizada. Verifique se esta imagem está contida na pasta!\n";
+        cout << nome << " não foi localizada. Verifique se a mesma esta contida na pasta!\n";
         exit(0);
     }
 }
+
 void salva_img(char nome[],Img img){
     ofstream myfile;
 
@@ -76,8 +104,22 @@ void salva_img(char nome[],Img img){
 }
 
 void escolha_nome(char nome[]){
-    cout << "Como você deseja salvar o arquivo? ";
-    cin >> nome;
+    int tamanho;
+
+    do{
+        cout << "Como você deseja salvar o arquivo? ";
+        cin >> nome;
+
+        tamanho=strlen(nome);
+
+        if(nome[tamanho-4]!= '.' || nome[tamanho-3]!='p' || nome[tamanho-2]!='p' || nome[tamanho-1]!='m'){
+            cout << endl << "Só é possível salvar no formato .ppm\n";
+        }
+
+        else{
+            break;
+        }
+    }while(true);
 }
 
 void corta_rgb(Img img_in, Img& img_out, int li, int ci, int lf, int cf){
@@ -113,8 +155,14 @@ void corta_rgb(Img img_in, Img& img_out, int li, int ci, int lf, int cf){
 
 void escolha_limiar(int& limiar){
 
-    cout << endl<< "Qual é o limiar desejado por você? ";
-    cin >> limiar;
+    do{
+        cout << endl<< "Qual é o limiar desejado por você? ";
+        cin >> limiar;
+
+        if(limiar>255 || limiar <0){
+            cout << "Limiar inválido! \n";
+        }
+    }while(limiar>255 || limiar<0);
 
 }
 
@@ -180,6 +228,10 @@ void aumenta_tamanho(Img img_in, Img& img_out){
     int i1,j1,i2,j2,k;
     char nome[STRMAX];
 
+    if(img_in.colunas*2-1>512 || img_in.linhas*2-1>512){
+        cout << "Não é possível aumentar essa imagem. Insira outra com um tamanho válido!";
+        exit(0);
+    }
     img_out.colunas=2*img_in.colunas-1;
     img_out.linhas=2*img_in.linhas-1;
 
