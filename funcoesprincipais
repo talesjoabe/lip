@@ -107,7 +107,7 @@ void escolha_nome(char nome[]){
     int tamanho;
 
     do{
-        cout << "Como você deseja salvar o arquivo? ";
+        cout << "Como você deseja salvar o arquivo?\n";
         cin >> nome;
 
         tamanho=strlen(nome);
