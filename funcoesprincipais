@@ -55,7 +55,7 @@ void abre_img(char nome[], Img& img){
             exit(0);
         }
 
-        else if(pixels>255 || pixels<255){
+        else if(pixels>255 || pixels<0){
             cout << endl << "Valor máximo admissível por cada pixel inválido!\n";
             exit(0);
         }
