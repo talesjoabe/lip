@@ -128,9 +128,9 @@ void corta_rgb(Img img_in, Img& img_out, int li, int ci, int lf, int cf){
 
     int i, j, k, li2, lf2, ci2, cf2;
 
-    while(cf<=ci || lf<=li){
-        cout << "Esta função corta a imagem apenas da esquerda para direita e de cima para baixo! \n";
-        cout << "Informe um sentido válido:\n";
+    while(cf<ci || lf<li){
+        cout << "Esta função corta a imagem apenas da esquerda para direita e de cima para baixo!\n";
+        cout << "Informe um sentido válido: ";
 
         cin >> li2 >> lf2 >> ci2 >> cf2;
 
@@ -883,7 +883,7 @@ int main(){
                 Img cortada;
                 int li, ci, lf, cf;
 
-                cout << "Informe a linha inicial, linha final, coluna inicial e coluna final:\n";
+                cout << "Informe a linha inicial, linha final, coluna inicial e coluna final: ";
                 cin >> li >> lf >> ci >> cf;
 
                 corta_rgb(img, cortada, li, ci, lf, cf);
@@ -1023,6 +1023,10 @@ int main(){
             case 24:
                 system("cls");
                 cout << "Já acabou, período?";
+            break;
+            
+            default:
+            cout<<" Opcao invalida. Tente de novo \n ";
             break;
 
         }
