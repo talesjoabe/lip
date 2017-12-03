@@ -992,9 +992,9 @@ int main(){
                 char r[STRMAX], g[STRMAX], b[STRMAX];
                 separa_canais(img, red, green, blue);
 
-                cout << "Escolha um nome para a imagem vermelho:\n";
+                cout << "Escolha um nome para a imagem vermelha:\n";
                 cin >> r;
-                cout << "\nEscolha um nome para a imagem azul:\n ";
+                cout << "Escolha um nome para a imagem azul:\n ";
                 cin >> b;
                 cout << "\nEscolha um nome para a imagem verde:\n";
                 cin >> g;
