@@ -3,7 +3,6 @@
 #include <locale.h> // permitir a acentuação
 #include <cstring>
 #include <cstdlib>
-#include <time.h>
 
 #define STRMAX 50
 
@@ -27,7 +26,7 @@ void abre_img(char nome[], Img& img){
 
         if(nome[tamanho-4]!= '.' || nome[tamanho-3]!='p' || nome[tamanho-2]!='p' || nome[tamanho-1]!='m'){
             cout << endl << "Só é possível abrir a imagem no formato .ppm\n";
-            cout <<"Informe o nome do arquivo que você deseja abrir: " << endl;
+            cout <<"Informe o nome do arquivo que você deseja abrir:\n" << endl;
             cin >> nomeaux;
             strcpy(nome, nomeaux);
         }
@@ -128,9 +127,9 @@ void corta_rgb(Img img_in, Img& img_out, int li, int ci, int lf, int cf){
 
     int i, j, k, li2, lf2, ci2, cf2;
 
-    while(cf<ci || lf<li){
-        cout << "Esta função corta a imagem apenas da esquerda para direita e de cima para baixo!\n";
-        cout << "Informe um sentido válido: ";
+    while(cf<=ci || lf<=li){
+        cout << "Esta função corta a imagem apenas da esquerda para direita e de cima para baixo! \n";
+        cout << "Informe um sentido válido:\n";
 
         cin >> li2 >> lf2 >> ci2 >> cf2;
 
@@ -794,10 +793,9 @@ int main(){
     int x, limiar,tempo;
     char nome[STRMAX];
 
-    cout <<"Informe o nome do arquivo que voce deseja abrir: " << endl;
+    cout <<"Informe o nome do arquivo que voce deseja abrir:\n";
     cin >> nome;
 
-    system("cls");
     abre_img(nome,img);
 
     do{
@@ -830,7 +828,7 @@ int main(){
         cout <<"\t 23- Solarizar \n";
         cout<<"\t 24- Sair \n ";
 
-        cout << endl << "Qual opção você deseja escolher? ";
+        cout << endl << "Qual opção você deseja escolher?\n";
         cin >> x;
 
         switch(x){
@@ -883,13 +881,12 @@ int main(){
                 Img cortada;
                 int li, ci, lf, cf;
 
-                cout << "Informe a linha inicial, linha final, coluna inicial e coluna final: ";
+                cout << "Informe a linha inicial, linha final, coluna inicial e coluna final:\n";
                 cin >> li >> lf >> ci >> cf;
 
                 corta_rgb(img, cortada, li, ci, lf, cf);
                 escolha_nome(nome);
                 salva_img(nome, cortada);
-
             break;
 
             case 8:
@@ -918,7 +915,6 @@ int main(){
                 remove_ruido_mediana(img, mediana);
                 escolha_nome(nome);
                 salva_img(nome,mediana);
-
             break;
 
             case 12:
@@ -926,7 +922,6 @@ int main(){
                 computa_derivada_horizontal(img, derivadahorizontal);
                 escolha_nome(nome);
                 salva_img(nome, derivadahorizontal);
-
             break;
 
             case 13:
@@ -934,7 +929,6 @@ int main(){
                 computa_derivada_vertical(img, derivadavertical);
                 escolha_nome(nome);
                 salva_img(nome, derivadavertical);
-
             break;
 
             case 14:
@@ -997,18 +991,17 @@ int main(){
                 Img red, green, blue;
                 char r[STRMAX], g[STRMAX], b[STRMAX];
                 separa_canais(img, red, green, blue);
-                
-                cout << "Escolha um nome para a imagem vermelho: ";
+
+                cout << "Escolha um nome para a imagem vermelho:\n";
                 cin >> r;
-                cout << "Escolha um nome para a imagem azul: ";
+                cout << "\nEscolha um nome para a imagem azul:\n ";
                 cin >> b;
-                cout << "Escolha um nome para a imagem verde: ";
+                cout << "\nEscolha um nome para a imagem verde:\n";
                 cin >> g;
-                
+
                 salva_img(r, red);
                 salva_img(b, blue);
                 salva_img(g, green);
-                
             break;
 
             case 23:
@@ -1021,28 +1014,14 @@ int main(){
             break;
 
             case 24:
-                system("cls");
-                cout << "Já acabou, período?";
+                cout << "Já acabou, período?\n";
             break;
-            
+
             default:
-            cout<<" Opcao invalida. Tente de novo \n ";
+                cout<<"Opcão inválida. Tente de novo! \n ";
             break;
-
         }
-        if(x!=24){
-            system("cls");
 
-            tempo = clock();
-            cout <<"\n\n\n\n\n\n\t ~~~~Voltando para o Menu!~~~~";
-
-            while(clock() - tempo < 5000){
-
-            }
-
-            system("cls");
-
-        }
     }while(x!=24);
 
     return 0;
